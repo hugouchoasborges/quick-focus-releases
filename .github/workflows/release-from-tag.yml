@@ -1,0 +1,113 @@
+name: Release From Tag
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout tagged commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve release inputs
+        id: vars
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG_NAME="${GITHUB_REF_NAME}"
+          VERSION="${TAG_NAME#v}"
+          RELEASE_DIR="releases/${VERSION}"
+          INSTALLER_PATH="${RELEASE_DIR}/QuickFocus-Setup.exe"
+          INFO_PATH="${RELEASE_DIR}/release-info.json"
+          NOTES_PATH="${RELEASE_DIR}/release-notes.md"
+
+          if [ ! -f "${INSTALLER_PATH}" ]; then
+            echo "Missing installer file: ${INSTALLER_PATH}" >&2
+            exit 1
+          fi
+          if [ ! -f "${INFO_PATH}" ]; then
+            echo "Missing release metadata: ${INFO_PATH}" >&2
+            exit 1
+          fi
+          if [ ! -f "${NOTES_PATH}" ]; then
+            echo "Missing release notes: ${NOTES_PATH}" >&2
+            exit 1
+          fi
+
+          RELEASE_DATE_UTC="$(jq -r '.releaseDateUtc // empty' "${INFO_PATH}")"
+          RELEASE_INFO_VERSION="$(jq -r '.version // empty' "${INFO_PATH}")"
+          if [ -z "${RELEASE_DATE_UTC}" ]; then
+            echo "releaseDateUtc is required in ${INFO_PATH}" >&2
+            exit 1
+          fi
+          if [ -z "${RELEASE_INFO_VERSION}" ]; then
+            echo "version is required in ${INFO_PATH}" >&2
+            exit 1
+          fi
+          if [ "${RELEASE_INFO_VERSION}" != "${VERSION}" ]; then
+            echo "release-info.json version (${RELEASE_INFO_VERSION}) must match tag version (${VERSION})" >&2
+            exit 1
+          fi
+
+          SHA256="$(sha256sum "${INSTALLER_PATH}" | awk '{print toupper($1)}')"
+          INSTALLER_URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG_NAME}/QuickFocus-Setup.exe"
+          RELEASE_NOTES_URL="https://github.com/${GITHUB_REPOSITORY}/releases/tag/${TAG_NAME}"
+
+          {
+            echo "tag_name=${TAG_NAME}"
+            echo "version=${VERSION}"
+            echo "release_dir=${RELEASE_DIR}"
+            echo "installer_path=${INSTALLER_PATH}"
+            echo "info_path=${INFO_PATH}"
+            echo "notes_path=${NOTES_PATH}"
+            echo "release_date_utc=${RELEASE_DATE_UTC}"
+            echo "sha256=${SHA256}"
+            echo "installer_url=${INSTALLER_URL}"
+            echo "release_notes_url=${RELEASE_NOTES_URL}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Publish GitHub release and upload installer
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.vars.outputs.tag_name }}
+          name: QuickFocus ${{ steps.vars.outputs.version }}
+          body_path: ${{ steps.vars.outputs.notes_path }}
+          files: ${{ steps.vars.outputs.installer_path }}
+
+      - name: Update latest.json on main branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin main
+          git switch -C automation-main origin/main
+
+          cat > latest.json <<EOF
+          {
+            "version": "${{ steps.vars.outputs.version }}",
+            "releaseDateUtc": "${{ steps.vars.outputs.release_date_utc }}",
+            "installerUrl": "${{ steps.vars.outputs.installer_url }}",
+            "installerSha256": "${{ steps.vars.outputs.sha256 }}",
+            "releaseNotesUrl": "${{ steps.vars.outputs.release_notes_url }}"
+          }
+          EOF
+
+          git add latest.json
+          if git diff --cached --quiet; then
+            echo "latest.json is already up to date"
+            exit 0
+          fi
+
+          git commit -m "chore: update latest manifest for ${{ steps.vars.outputs.version }}"
+          git push origin HEAD:main
