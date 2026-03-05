@@ -90,7 +90,7 @@ jobs:
           body_path: ${{ steps.vars.outputs.notes_path }}
           files: ${{ steps.vars.outputs.installer_path }}
 
-      - name: Update latest.json on main branch
+      - name: Update latest.json and releases-index.json on main branch
         shell: bash
         run: |
           set -euo pipefail
@@ -110,9 +110,35 @@ jobs:
           }
           EOF
 
-          git add latest.json
+          if [ -f releases-index.json ]; then
+            EXISTING_INDEX="$(cat releases-index.json)"
+          else
+            EXISTING_INDEX="[]"
+          fi
+
+          UPDATED_INDEX="$(jq \
+            --arg version "${{ steps.vars.outputs.version }}" \
+            --arg releaseDateUtc "${{ steps.vars.outputs.release_date_utc }}" \
+            --arg installerUrl "${{ steps.vars.outputs.installer_url }}" \
+            --arg installerSha256 "${{ steps.vars.outputs.sha256 }}" \
+            --arg releaseNotesUrl "${{ steps.vars.outputs.release_notes_url }}" \
+            '
+              (if type == "array" then . else [] end)
+              | map(select(.version != $version))
+              + [{
+                  version: $version,
+                  releaseDateUtc: $releaseDateUtc,
+                  installerUrl: $installerUrl,
+                  installerSha256: $installerSha256,
+                  releaseNotesUrl: $releaseNotesUrl
+                }]
+            ' <<< "$EXISTING_INDEX")"
+
+          printf "%s\n" "$UPDATED_INDEX" > releases-index.json
+
+          git add latest.json releases-index.json
           if git diff --cached --quiet; then
-            echo "latest.json is already up to date"
+            echo "Manifest files are already up to date"
             exit 0
           fi
 
