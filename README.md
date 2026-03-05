@@ -24,6 +24,7 @@ Workflow: `.github/workflows/release-from-tag.yml`
 Trigger:
 
 - Push tag in format `v<version>` (example: `v1.0.1`).
+- Alpha/Beta tags are also supported (examples: `v1.0.1a`, `v1.0.1b`).
 
 Required files in tagged commit:
 
@@ -37,3 +38,9 @@ What automation does:
 2. Computes installer SHA-256.
 3. Creates/updates GitHub Release for the tag and uploads installer.
 4. Updates root `latest.json` on `main` so app auto-update detects the new release.
+
+Release naming:
+
+- Stable: `QuickFocus <version>`
+- Alpha: `QuickFocus <version> (Alpha)`
+- Beta: `QuickFocus <version> (Beta)`

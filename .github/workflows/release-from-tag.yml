@@ -61,6 +61,12 @@ jobs:
           SHA256="$(sha256sum "${INSTALLER_PATH}" | awk '{print toupper($1)}')"
           INSTALLER_URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG_NAME}/QuickFocus-Setup.exe"
           RELEASE_NOTES_URL="https://github.com/${GITHUB_REPOSITORY}/releases/tag/${TAG_NAME}"
+          RELEASE_NAME="QuickFocus ${VERSION}"
+          if [[ "${VERSION}" == *a ]]; then
+            RELEASE_NAME="${RELEASE_NAME} (Alpha)"
+          elif [[ "${VERSION}" == *b ]]; then
+            RELEASE_NAME="${RELEASE_NAME} (Beta)"
+          fi
 
           {
             echo "tag_name=${TAG_NAME}"
@@ -73,13 +79,14 @@ jobs:
             echo "sha256=${SHA256}"
             echo "installer_url=${INSTALLER_URL}"
             echo "release_notes_url=${RELEASE_NOTES_URL}"
+            echo "release_name=${RELEASE_NAME}"
           } >> "$GITHUB_OUTPUT"
 
       - name: Publish GitHub release and upload installer
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.vars.outputs.tag_name }}
-          name: QuickFocus ${{ steps.vars.outputs.version }}
+          name: ${{ steps.vars.outputs.release_name }}
           body_path: ${{ steps.vars.outputs.notes_path }}
           files: ${{ steps.vars.outputs.installer_path }}
 
