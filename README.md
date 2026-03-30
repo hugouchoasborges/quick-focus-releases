@@ -23,6 +23,23 @@ This branch (`gh-pages`) hosts only the public website.
 3. Commit and push inside submodule repository.
 4. In dev repo, commit the updated submodule pointer only if you want to pin a specific site commit.
 
+### Theme selector
+
+- Website supports `System`, `Dark`, and `White` themes.
+- User choice is saved in `localStorage` (`quickfocus-theme`).
+- `System` follows OS/browser preference via `prefers-color-scheme`.
+
+### Media folders and gallery
+
+- Add assets to:
+  - `Images/`
+  - `Gifs/`
+  - `Videos/`
+- List files in `media-manifest.json`:
+  - `images`: array of paths (e.g. `Images/screenshot-1.png`)
+  - `gifs`: array of paths (e.g. `Gifs/demo.gif`)
+  - `videos`: array of paths (e.g. `Videos/flow.mp4`)
+
 ## Download and upgrade links
 
 - Download (stable asset name):

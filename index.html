@@ -14,11 +14,22 @@
 <body>
   <header class="topbar container">
     <a class="brand" href="#top">QuickFocus</a>
-    <nav>
-      <a href="#benefits">Benefits</a>
-      <a href="#plans">Free vs Pro</a>
-      <a href="#faq">FAQ</a>
-    </nav>
+    <div class="topbar-right">
+      <nav>
+        <a href="#benefits">Benefits</a>
+        <a href="#media">Media</a>
+        <a href="#plans">Free vs Pro</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <label class="theme-control" for="theme-select">
+        <span>Theme</span>
+        <select id="theme-select" aria-label="Select theme">
+          <option value="system">System</option>
+          <option value="dark">Dark</option>
+          <option value="light">White</option>
+        </select>
+      </label>
+    </div>
   </header>
 
   <main id="top">
@@ -50,6 +61,25 @@
       <img src="assets/images/mock-minimal.svg" alt="Minimal mode mockup">
       <img src="assets/images/mock-dashboard.svg" alt="Workspace view mockup">
       <img src="assets/images/mock-dashboard.svg" alt="Task flow mockup">
+    </section>
+
+    <section id="media" class="media container">
+      <h2>Media Gallery</h2>
+      <p>Add your files to <code>/Images</code>, <code>/Gifs</code>, and <code>/Videos</code>, then list them in <code>media-manifest.json</code>.</p>
+      <div id="media-gallery" class="media-grid">
+        <article class="media-card">
+          <h3>Images</h3>
+          <div class="media-items" data-kind="images"></div>
+        </article>
+        <article class="media-card">
+          <h3>GIFs</h3>
+          <div class="media-items" data-kind="gifs"></div>
+        </article>
+        <article class="media-card">
+          <h3>Videos</h3>
+          <div class="media-items" data-kind="videos"></div>
+        </article>
+      </div>
     </section>
 
     <section id="benefits" class="benefits container">
