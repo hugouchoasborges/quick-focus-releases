@@ -1,0 +1,24 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" role="img" aria-label="QuickFocus dashboard mockup">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef7fc"/>
+      <stop offset="1" stop-color="#f9fdff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1120" height="700" fill="url(#bg)"/>
+  <rect x="36" y="52" width="248" height="596" rx="16" fill="#fff" stroke="#d7e4ec"/>
+  <rect x="314" y="52" width="770" height="596" rx="16" fill="#fff" stroke="#d7e4ec"/>
+  <rect x="58" y="92" width="204" height="20" rx="8" fill="#d0e3ef"/>
+  <rect x="58" y="132" width="186" height="14" rx="7" fill="#e4eef5"/>
+  <rect x="58" y="166" width="196" height="14" rx="7" fill="#e4eef5"/>
+  <rect x="58" y="232" width="204" height="44" rx="12" fill="#0d7f87"/>
+  <rect x="340" y="92" width="420" height="28" rx="10" fill="#d4e8f2"/>
+  <rect x="340" y="148" width="716" height="84" rx="14" fill="#f4f9fc" stroke="#dce9f1"/>
+  <rect x="340" y="252" width="716" height="84" rx="14" fill="#f4f9fc" stroke="#dce9f1"/>
+  <rect x="340" y="356" width="716" height="84" rx="14" fill="#f4f9fc" stroke="#dce9f1"/>
+  <rect x="340" y="460" width="716" height="84" rx="14" fill="#f4f9fc" stroke="#dce9f1"/>
+  <rect x="364" y="176" width="120" height="12" rx="6" fill="#a8c9d8"/>
+  <rect x="364" y="280" width="160" height="12" rx="6" fill="#a8c9d8"/>
+  <rect x="364" y="384" width="188" height="12" rx="6" fill="#a8c9d8"/>
+  <rect x="364" y="488" width="150" height="12" rx="6" fill="#a8c9d8"/>
+</svg>

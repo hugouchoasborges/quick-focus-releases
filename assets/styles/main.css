@@ -1,0 +1,209 @@
+﻿:root {
+  --bg: #f4f8fb;
+  --panel: #ffffff;
+  --text: #122026;
+  --muted: #4d6471;
+  --brand: #0d7f87;
+  --brand-dark: #0a5f65;
+  --line: #d5e2ea;
+  --shadow: 0 12px 32px rgba(7, 38, 45, 0.12);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(1200px 400px at 90% -10%, #b6edf0 0%, transparent 60%),
+    radial-gradient(1000px 500px at 10% -15%, #d8f0ff 0%, transparent 50%),
+    var(--bg);
+}
+
+.container {
+  width: min(1120px, 92vw);
+  margin: 0 auto;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.1rem 0;
+}
+
+.brand, .topbar a {
+  text-decoration: none;
+  color: var(--text);
+}
+
+.brand {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.topbar nav { display: flex; gap: 1.1rem; }
+.topbar nav a { color: var(--muted); font-weight: 500; }
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  padding: 2.3rem 0 1.6rem;
+}
+
+.eyebrow {
+  color: var(--brand);
+  font-weight: 600;
+  margin: 0 0 .6rem;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+h1 { font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.05; }
+h2 { font-size: clamp(1.5rem, 2.8vw, 2.2rem); margin-bottom: 1rem; }
+h3 { font-size: 1.1rem; margin-bottom: .35rem; }
+
+.sub { margin: .95rem 0 1.35rem; color: var(--muted); max-width: 62ch; }
+
+.cta-row { display: flex; gap: .8rem; flex-wrap: wrap; }
+
+.btn {
+  display: inline-block;
+  border-radius: 999px;
+  padding: .72rem 1.15rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--brand), #2d9dac);
+  color: #fff;
+}
+
+.btn-primary:hover { background: linear-gradient(135deg, #0d6f76, #1f8794); }
+
+.btn-secondary {
+  background: #fff;
+  border-color: var(--line);
+  color: var(--text);
+}
+
+.meta-links { margin-top: .9rem; display: flex; gap: .9rem; flex-wrap: wrap; }
+.meta-links a { color: var(--brand-dark); text-underline-offset: 2px; }
+
+.window-window {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.window-head {
+  background: #eef5fa;
+  padding: .6rem .8rem;
+  display: flex;
+  gap: .35rem;
+}
+
+.window-head span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #b7cad8;
+}
+
+.hero-visual img, .showcase img {
+  width: 100%;
+  display: block;
+}
+
+.showcase {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .9rem;
+  margin: 1.2rem auto 2.1rem;
+}
+
+.showcase img {
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  background: #fff;
+}
+
+.benefits, .plans, .cta, .faq {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.35rem;
+  margin-bottom: 1.05rem;
+  box-shadow: 0 8px 22px rgba(7, 38, 45, 0.08);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .9rem;
+}
+
+.benefits article {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: .95rem;
+  background: #fcfeff;
+}
+
+.benefits p, .faq p { margin: 0; color: var(--muted); }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .97rem;
+}
+
+th, td {
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  padding: .6rem .45rem;
+}
+
+th { font-family: "Space Grotesk", sans-serif; }
+
+.cta h2 { margin-bottom: 1rem; }
+
+details {
+  border-top: 1px solid var(--line);
+  padding: .62rem 0;
+}
+
+details:first-of-type { border-top: 0; }
+summary { cursor: pointer; font-weight: 600; }
+
+.footer {
+  padding: 1rem 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: .92rem;
+}
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .showcase { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+  .topbar { flex-direction: column; align-items: flex-start; gap: .55rem; }
+  .showcase { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: 1fr; }
+  .footer { flex-direction: column; gap: .35rem; }
+}
