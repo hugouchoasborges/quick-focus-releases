@@ -62,10 +62,14 @@ jobs:
           INSTALLER_URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG_NAME}/QuickFocus-Setup.exe"
           RELEASE_NOTES_URL="https://github.com/${GITHUB_REPOSITORY}/releases/tag/${TAG_NAME}"
           RELEASE_NAME="QuickFocus ${VERSION}"
+          PRERELEASE="false"
+          MAKE_LATEST="true"
           if [[ "${VERSION}" == *a ]]; then
             RELEASE_NAME="${RELEASE_NAME} (Alpha)"
+            MAKE_LATEST="false"
           elif [[ "${VERSION}" == *b ]]; then
             RELEASE_NAME="${RELEASE_NAME} (Beta)"
+            MAKE_LATEST="false"
           fi
 
           {
@@ -80,6 +84,8 @@ jobs:
             echo "installer_url=${INSTALLER_URL}"
             echo "release_notes_url=${RELEASE_NOTES_URL}"
             echo "release_name=${RELEASE_NAME}"
+            echo "prerelease=${PRERELEASE}"
+            echo "make_latest=${MAKE_LATEST}"
           } >> "$GITHUB_OUTPUT"
 
       - name: Publish GitHub release and upload installer
@@ -89,6 +95,8 @@ jobs:
           name: ${{ steps.vars.outputs.release_name }}
           body_path: ${{ steps.vars.outputs.notes_path }}
           files: ${{ steps.vars.outputs.installer_path }}
+          prerelease: ${{ steps.vars.outputs.prerelease }}
+          make_latest: ${{ steps.vars.outputs.make_latest }}
 
       - name: Update latest.json and releases-index.json on main branch
         shell: bash
