@@ -39,61 +39,23 @@ function initializeTheme() {
   });
 }
 
-function activeLanguageKey() {
-  return document.documentElement.lang.toLowerCase().startsWith("pt") ? "pt" : "en";
-}
-
-function mediaPlaceholder(kind) {
-  const lang = activeLanguageKey();
-  const messages = {
-    images: {
-      en: "Add files to /Images and list them in media-manifest.json",
-      pt: "Adicione arquivos em /Images e liste em media-manifest.json"
-    },
-    gifs: {
-      en: "Add files to /Gifs and list them in media-manifest.json",
-      pt: "Adicione arquivos em /Gifs e liste em media-manifest.json"
-    },
-    videos: {
-      en: "Add files to /Videos and list them in media-manifest.json",
-      pt: "Adicione arquivos em /Videos e liste em media-manifest.json"
-    }
-  };
-
-  return messages[kind]?.[lang] || messages[kind]?.en || "";
-}
-
-function renderPlaceholder(container, kind) {
-  container.innerHTML = `<div class="media-frame">${mediaPlaceholder(kind)}</div>`;
-}
-
-function createItemTemplate(path) {
+function isVideo(path) {
   const lower = path.toLowerCase();
-  if (lower.endsWith(".mp4") || lower.endsWith(".webm")) {
-    return `<video class="media-thumb" src="${path}" controls preload="metadata"></video>`;
-  }
-  return `<img class="media-thumb" src="${path}" alt="QuickFocus media preview">`;
+  return lower.endsWith(".mp4") || lower.endsWith(".webm");
 }
 
-function renderItems(kind, items) {
-  const container = document.querySelector(`.media-items[data-kind="${kind}"]`);
-  if (!container) {
-    return;
-  }
-
-  if (!items.length) {
-    renderPlaceholder(container, kind);
-    return;
-  }
-
-  const template = items
-    .map((path) => `<div class="media-frame">${createItemTemplate(path)}</div>`)
-    .join("");
-
-  container.innerHTML = template;
+function createMediaItems(manifest) {
+  return [
+    ...(manifest.images || []),
+    ...(manifest.gifs || []),
+    ...(manifest.videos || [])
+  ].map((path) => ({ path, kind: isVideo(path) ? "video" : "image" }));
 }
 
 let cachedManifest = null;
+let mediaItems = [];
+let mediaIndex = 0;
+let mediaEventsBound = false;
 
 async function loadManifest() {
   if (cachedManifest) {
@@ -109,22 +71,145 @@ async function loadManifest() {
   return cachedManifest;
 }
 
+function renderMediaCard(item, index) {
+  const preview = item.kind === "video"
+    ? `<video class="media-thumb" src="${item.path}" muted playsinline preload="metadata"></video>`
+    : `<img class="media-thumb" src="${item.path}" alt="QuickFocus media preview">`;
+
+  return `<button class="media-frame media-card-btn" data-media-open="${index}" type="button">${preview}</button>`;
+}
+
+function renderMediaGrid(items) {
+  const grid = document.querySelector("[data-media-grid]");
+  if (!grid) {
+    return;
+  }
+
+  grid.innerHTML = items.map((item, index) => renderMediaCard(item, index)).join("");
+}
+
+function renderLightboxItem() {
+  const viewer = document.querySelector("[data-media-viewer]");
+  if (!viewer || !mediaItems.length) {
+    return;
+  }
+
+  const item = mediaItems[mediaIndex];
+  if (item.kind === "video") {
+    viewer.innerHTML = `<video class="media-lightbox-media" src="${item.path}" controls autoplay playsinline preload="metadata"></video>`;
+  } else {
+    viewer.innerHTML = `<img class="media-lightbox-media" src="${item.path}" alt="QuickFocus media preview">`;
+  }
+}
+
+function openLightbox(index) {
+  if (!mediaItems.length) {
+    return;
+  }
+
+  mediaIndex = index;
+  const lightbox = document.querySelector("[data-media-lightbox]");
+  if (!lightbox) {
+    return;
+  }
+
+  renderLightboxItem();
+  lightbox.hidden = false;
+  document.body.classList.add("media-lightbox-open");
+}
+
+function closeLightbox() {
+  const lightbox = document.querySelector("[data-media-lightbox]");
+  if (!lightbox) {
+    return;
+  }
+
+  lightbox.hidden = true;
+  document.body.classList.remove("media-lightbox-open");
+}
+
+function shiftLightbox(step) {
+  if (!mediaItems.length) {
+    return;
+  }
+
+  mediaIndex = (mediaIndex + step + mediaItems.length) % mediaItems.length;
+  renderLightboxItem();
+}
+
+function bindMediaEvents() {
+  if (mediaEventsBound) {
+    return;
+  }
+
+  mediaEventsBound = true;
+
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    const opener = target.closest("[data-media-open]");
+    if (opener instanceof HTMLElement) {
+      const value = Number(opener.getAttribute("data-media-open"));
+      if (Number.isInteger(value)) {
+        openLightbox(value);
+      }
+      return;
+    }
+
+    if (target.closest("[data-media-close]")) {
+      closeLightbox();
+      return;
+    }
+
+    if (target.closest("[data-media-prev]")) {
+      shiftLightbox(-1);
+      return;
+    }
+
+    if (target.closest("[data-media-next]")) {
+      shiftLightbox(1);
+      return;
+    }
+
+    if (target.matches("[data-media-lightbox]")) {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    const lightbox = document.querySelector("[data-media-lightbox]");
+    if (!lightbox || lightbox.hidden) {
+      return;
+    }
+
+    if (event.key === "Escape") {
+      closeLightbox();
+    } else if (event.key === "ArrowLeft") {
+      shiftLightbox(-1);
+    } else if (event.key === "ArrowRight") {
+      shiftLightbox(1);
+    }
+  });
+}
+
 async function initializeMedia() {
-  const hasMedia = document.querySelector(".media-items");
+  const hasMedia = document.querySelector("[data-media-grid]");
   if (!hasMedia) {
     return;
   }
 
   try {
     const manifest = await loadManifest();
-    renderItems("images", manifest.images || []);
-    renderItems("gifs", manifest.gifs || []);
-    renderItems("videos", manifest.videos || []);
+    mediaItems = createMediaItems(manifest);
   } catch (_error) {
-    renderItems("images", []);
-    renderItems("gifs", []);
-    renderItems("videos", []);
+    mediaItems = [];
   }
+
+  renderMediaGrid(mediaItems);
+  bindMediaEvents();
 }
 
 function initializeYear() {

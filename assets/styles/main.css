@@ -206,41 +206,83 @@ h3 { font-size: 1.1rem; margin-bottom: .35rem; }
 
 .media p { margin-bottom: .9rem; }
 
-.media-grid {
+.media-gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: .9rem;
 }
 
-.media-card {
+.media-frame {
   border: 1px solid var(--line);
   border-radius: 12px;
-  padding: .85rem;
+  background: var(--panel);
+  padding: 0;
 }
 
-.media-items {
-  display: grid;
-  gap: .5rem;
-}
-
-.media-frame {
-  border: 1px dashed var(--line);
-  border-radius: 10px;
-  min-height: 120px;
-  background: var(--media-placeholder);
-  color: var(--muted);
-  display: grid;
-  place-content: center;
-  text-align: center;
-  font-size: .9rem;
-  padding: .55rem;
+.media-card-btn {
+  width: 100%;
+  cursor: pointer;
+  overflow: hidden;
 }
 
 .media-thumb {
+  display: block;
   width: 100%;
-  border-radius: 10px;
-  border: 1px solid var(--line);
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border: 0;
+  border-radius: 12px;
   background: var(--panel);
+}
+
+.media-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: color-mix(in srgb, #000 78%, transparent);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: .7rem;
+  padding: 1.4rem;
+}
+
+.media-lightbox-content {
+  display: grid;
+  place-items: center;
+}
+
+.media-lightbox-media {
+  max-width: min(92vw, 1280px);
+  max-height: 82vh;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #000;
+}
+
+.media-lightbox-close,
+.media-lightbox-nav {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.media-lightbox-close {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: .5rem .7rem;
+}
+
+.media-lightbox-nav {
+  padding: .65rem .8rem;
+}
+
+body.media-lightbox-open {
+  overflow: hidden;
 }
 
 table {
@@ -278,7 +320,7 @@ summary { cursor: pointer; font-weight: 600; }
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }
   .showcase { grid-template-columns: 1fr 1fr; }
-  .media-grid { grid-template-columns: 1fr; }
+  .media-gallery-grid { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 640px) {
@@ -287,6 +329,10 @@ summary { cursor: pointer; font-weight: 600; }
   .topbar nav { flex-wrap: wrap; }
   .showcase { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: 1fr; }
+  .media-gallery-grid { grid-template-columns: 1fr; }
+  .media-lightbox { grid-template-columns: 1fr; }
+  .media-lightbox-prev,
+  .media-lightbox-next { display: none; }
   .footer { flex-direction: column; gap: .35rem; }
 }
 

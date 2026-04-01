@@ -53,7 +53,7 @@
       <div class="hero-visual">
         <div class="window-window">
           <div class="window-bar"></div>
-          <img src="assets/images/mock-dashboard.svg" alt="QuickFocus dashboard preview">
+          <img src="Images/01-06-51[3509]_QuickFocus.png" alt="QuickFocus dashboard preview">
         </div>
       </div>
     </section>
@@ -61,19 +61,12 @@
     <section id="media" class="media container">
       <h2 data-i18n="media-title">Media</h2>
       <p data-i18n="media-sub">Screenshots, GIFs and videos from recent builds.</p>
-      <div class="media-grid">
-        <article>
-          <h3 data-i18n="media-images">Images</h3>
-          <div class="media-items" data-kind="images"></div>
-        </article>
-        <article>
-          <h3 data-i18n="media-gifs">GIFs</h3>
-          <div class="media-items" data-kind="gifs"></div>
-        </article>
-        <article>
-          <h3 data-i18n="media-videos">Videos</h3>
-          <div class="media-items" data-kind="videos"></div>
-        </article>
+      <div class="media-gallery-grid" data-media-grid></div>
+      <div class="media-lightbox" data-media-lightbox hidden>
+        <button class="media-lightbox-close" data-media-close data-i18n="media-close" type="button">Close</button>
+        <button class="media-lightbox-nav media-lightbox-prev" data-media-prev data-i18n="media-prev" type="button">Prev</button>
+        <div class="media-lightbox-content" data-media-viewer></div>
+        <button class="media-lightbox-nav media-lightbox-next" data-media-next data-i18n="media-next" type="button">Next</button>
       </div>
     </section>
 
