@@ -115,6 +115,7 @@
     "support-updated": { en: "Need help with QuickFocus?", pt: "Precisa de ajuda com o QuickFocus?" },
     "support-intro": { en: "Use the channels below for installation, update, license, and sync issues.", pt: "Use os canais abaixo para problemas de instalação, atualização, licença e sincronização." },
     "support-section-channels": { en: "1. Support channels", pt: "1. Canais de suporte" },
+    "support-channel-contact": { en: "Contact: Hugo Uchôas Borges — hugouchoas@outlook.com", pt: "Contato: Hugo Uchôas Borges — hugouchoas@outlook.com" },
     "support-channel-issues": { en: "Bug reports and feature issues: GitHub Issues", pt: "Relato de bugs e problemas de recurso: GitHub Issues" },
     "support-channel-releases": { en: "Installer and release history: QuickFocus Releases", pt: "Instalador e histórico de releases: QuickFocus Releases" },
     "support-section-before": { en: "2. Before opening an issue", pt: "2. Antes de abrir um issue" },
