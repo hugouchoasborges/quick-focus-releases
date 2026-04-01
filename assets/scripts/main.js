@@ -201,6 +201,12 @@ async function initializeMedia() {
     return;
   }
 
+  const lightbox = document.querySelector("[data-media-lightbox]");
+  if (lightbox) {
+    lightbox.hidden = true;
+  }
+  document.body.classList.remove("media-lightbox-open");
+
   try {
     const manifest = await loadManifest();
     mediaItems = createMediaItems(manifest);

@@ -247,6 +247,10 @@ h3 { font-size: 1.1rem; margin-bottom: .35rem; }
   padding: 1.4rem;
 }
 
+.media-lightbox[hidden] {
+  display: none !important;
+}
+
 .media-lightbox-content {
   display: grid;
   place-items: center;
