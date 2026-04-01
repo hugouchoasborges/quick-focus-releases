@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="privacy-title">Privacy Policy</title>
+  <meta data-i18n="site-description" data-i18n-attr="content" name="description" content="QuickFocus is a lightweight Windows productivity app with tray-first workflow, projects, workspaces, reminders, and focus tools.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+  <link rel="stylesheet" href="assets/styles/main.css">
+</head>
+<body>
+  <header class="topbar container">
+    <a class="brand" href="index.html">QuickFocus</a>
+    <div class="topbar-right">
+      <nav>
+        <a href="index.html" data-i18n="nav-home">Home</a>
+        <a href="terms.html" data-i18n="nav-terms">Terms</a>
+        <a href="privacy.html" data-i18n="nav-privacy">Privacy</a>
+        <a href="support.html" data-i18n="nav-support">Support</a>
+        <a href="third-party.html" data-i18n="nav-licenses">Licenses</a>
+      </nav>
+      <label class="theme-control" for="theme-select">
+        <span data-i18n="theme-label">Theme:</span>
+        <select id="theme-select" aria-label="Select theme">
+          <option value="system" data-i18n="theme-system">System</option>
+          <option value="dark" data-i18n="theme-dark">Dark</option>
+          <option value="light" data-i18n="theme-light">White</option>
+        </select>
+      </label>
+      <label class="theme-control" for="language-select">
+        <span data-i18n="lang-label">Language:</span>
+        <select id="language-select" data-lang-select aria-label="Select language">
+          <option value="en">English</option>
+          <option value="pt-BR">Português</option>
+        </select>
+      </label>
+    </div>
+  </header>
+
+  <main class="legal-page container">
+    <h1 data-i18n="privacy-title">Privacy Policy</h1>
+    <p class="muted" data-i18n="privacy-updated">Last updated: April 2026</p>
+    <p data-i18n="privacy-intro">QuickFocus is designed as a local-first desktop app.</p>
+
+    <h2 data-i18n="privacy-section-data">1. Local data</h2>
+    <p data-i18n="privacy-data-1">Tasks, settings, and productivity state are stored locally on your device.</p>
+    <p data-i18n="privacy-data-2">Theme and language preferences on this website are saved in your browser localStorage.</p>
+
+    <h2 data-i18n="privacy-section-sync">2. Optional Google Drive sync</h2>
+    <p data-i18n="privacy-sync-1">Google Drive sync is optional and only used when you explicitly connect and enable it.</p>
+    <p data-i18n="privacy-sync-2">When enabled, app data is synchronized through your Drive appDataFolder using your Google account permissions.</p>
+
+    <h2 data-i18n="privacy-section-collection">3. Data collection</h2>
+    <p data-i18n="privacy-collection-1">QuickFocus does not require unnecessary personal data to run core local features.</p>
+    <p data-i18n="privacy-collection-2">This website does not include third-party analytics scripts at this time.</p>
+
+    <h2 data-i18n="privacy-section-contact">4. Contact</h2>
+    <p data-i18n="privacy-contact-1">For privacy questions, use the Support page channels.</p>
+  </main>
+
+  <footer class="container footer">
+    <p data-i18n="footer-product">QuickFocus for Windows</p>
+    <nav class="footer-links" aria-label="Institutional links">
+      <a href="terms.html" data-i18n="footer-terms">Terms</a>
+      <a href="privacy.html" data-i18n="footer-privacy">Privacy</a>
+      <a href="support.html" data-i18n="footer-support">Support</a>
+      <a href="third-party.html" data-i18n="footer-licenses">Licenses</a>
+    </nav>
+    <p>© <span id="year"></span> QuickFocus</p>
+  </footer>
+
+  <script src="assets/scripts/i18n.js"></script>
+  <script src="assets/scripts/main.js"></script>
+</body>
+</html>

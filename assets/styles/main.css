@@ -289,3 +289,47 @@ summary { cursor: pointer; font-weight: 600; }
   .grid-4 { grid-template-columns: 1fr; }
   .footer { flex-direction: column; gap: .35rem; }
 }
+
+.footer-links {
+  display: flex;
+  gap: .9rem;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: var(--muted);
+  text-underline-offset: 2px;
+}
+
+.legal-page {
+  padding-top: 2.2rem;
+  padding-bottom: 2.2rem;
+}
+
+.legal-page h1 {
+  margin-bottom: .4rem;
+}
+
+.legal-page .muted {
+  color: var(--muted);
+}
+
+.legal-page h2 {
+  margin-top: 1.8rem;
+  margin-bottom: .55rem;
+}
+
+.support-list {
+  margin: .45rem 0 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: .45rem;
+}
+
+.support-list li {
+  color: var(--muted);
+}
+
+.support-list a {
+  margin-left: .4rem;
+}

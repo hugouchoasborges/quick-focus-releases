@@ -1,5 +1,4 @@
 ﻿const THEME_KEY = "quickfocus-theme";
-const themeSelect = document.getElementById("theme-select");
 
 function resolveTheme(selectedTheme) {
   if (selectedTheme === "dark") {
@@ -17,6 +16,11 @@ function applyTheme(selectedTheme) {
 }
 
 function initializeTheme() {
+  const themeSelect = document.getElementById("theme-select");
+  if (!themeSelect) {
+    return;
+  }
+
   const savedTheme = localStorage.getItem(THEME_KEY) || "system";
   themeSelect.value = savedTheme;
   applyTheme(savedTheme);
@@ -35,16 +39,40 @@ function initializeTheme() {
   });
 }
 
-function renderPlaceholder(container, label) {
-  container.innerHTML = `<div class="media-frame">Add files to /${label} and list them in media-manifest.json</div>`;
+function activeLanguageKey() {
+  return document.documentElement.lang.toLowerCase().startsWith("pt") ? "pt" : "en";
 }
 
-function createImageElement(path) {
-  return `<img class="media-thumb" src="${path}" alt="QuickFocus media">`;
+function mediaPlaceholder(kind) {
+  const lang = activeLanguageKey();
+  const messages = {
+    images: {
+      en: "Add files to /Images and list them in media-manifest.json",
+      pt: "Adicione arquivos em /Images e liste em media-manifest.json"
+    },
+    gifs: {
+      en: "Add files to /Gifs and list them in media-manifest.json",
+      pt: "Adicione arquivos em /Gifs e liste em media-manifest.json"
+    },
+    videos: {
+      en: "Add files to /Videos and list them in media-manifest.json",
+      pt: "Adicione arquivos em /Videos e liste em media-manifest.json"
+    }
+  };
+
+  return messages[kind]?.[lang] || messages[kind]?.en || "";
 }
 
-function createVideoElement(path) {
-  return `<video class="media-thumb" src="${path}" controls preload="metadata"></video>`;
+function renderPlaceholder(container, kind) {
+  container.innerHTML = `<div class="media-frame">${mediaPlaceholder(kind)}</div>`;
+}
+
+function createItemTemplate(path) {
+  const lower = path.toLowerCase();
+  if (lower.endsWith(".mp4") || lower.endsWith(".webm")) {
+    return `<video class="media-thumb" src="${path}" controls preload="metadata"></video>`;
+  }
+  return `<img class="media-thumb" src="${path}" alt="QuickFocus media preview">`;
 }
 
 function renderItems(kind, items) {
@@ -53,41 +81,72 @@ function renderItems(kind, items) {
     return;
   }
 
-  if (!Array.isArray(items) || items.length === 0) {
-    renderPlaceholder(container, kind === "images" ? "Images" : kind === "gifs" ? "Gifs" : "Videos");
+  if (!items.length) {
+    renderPlaceholder(container, kind);
     return;
   }
 
   const template = items
-    .map((path) => {
-      if (kind === "videos") {
-        return createVideoElement(path);
-      }
-      return createImageElement(path);
-    })
+    .map((path) => `<div class="media-frame">${createItemTemplate(path)}</div>`)
     .join("");
 
   container.innerHTML = template;
 }
 
-async function initializeMedia() {
-  try {
-    const response = await fetch("media-manifest.json", { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error("Manifest unavailable");
-    }
+let cachedManifest = null;
 
-    const manifest = await response.json();
+async function loadManifest() {
+  if (cachedManifest) {
+    return cachedManifest;
+  }
+
+  const response = await fetch("media-manifest.json", { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error("Manifest unavailable");
+  }
+
+  cachedManifest = await response.json();
+  return cachedManifest;
+}
+
+async function initializeMedia() {
+  const hasMedia = document.querySelector(".media-items");
+  if (!hasMedia) {
+    return;
+  }
+
+  try {
+    const manifest = await loadManifest();
     renderItems("images", manifest.images || []);
     renderItems("gifs", manifest.gifs || []);
     renderItems("videos", manifest.videos || []);
-  } catch {
+  } catch (_error) {
     renderItems("images", []);
     renderItems("gifs", []);
     renderItems("videos", []);
   }
 }
 
-document.getElementById("year").textContent = new Date().getFullYear();
+function initializeYear() {
+  const year = document.getElementById("year");
+  if (!year) {
+    return;
+  }
+  year.textContent = new Date().getFullYear();
+}
+
+function initializeLanguage() {
+  if (!window.QuickFocusI18n || !window.QuickFocusI18n.initialize) {
+    return;
+  }
+  window.QuickFocusI18n.initialize();
+}
+
+window.addEventListener("quickfocus:language-changed", () => {
+  initializeMedia();
+});
+
 initializeTheme();
+initializeLanguage();
 initializeMedia();
+initializeYear();

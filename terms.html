@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="terms-title">Terms of Use</title>
+  <meta data-i18n="site-description" data-i18n-attr="content" name="description" content="QuickFocus is a lightweight Windows productivity app with tray-first workflow, projects, workspaces, reminders, and focus tools.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+  <link rel="stylesheet" href="assets/styles/main.css">
+</head>
+<body>
+  <header class="topbar container">
+    <a class="brand" href="index.html">QuickFocus</a>
+    <div class="topbar-right">
+      <nav>
+        <a href="index.html" data-i18n="nav-home">Home</a>
+        <a href="terms.html" data-i18n="nav-terms">Terms</a>
+        <a href="privacy.html" data-i18n="nav-privacy">Privacy</a>
+        <a href="support.html" data-i18n="nav-support">Support</a>
+        <a href="third-party.html" data-i18n="nav-licenses">Licenses</a>
+      </nav>
+      <label class="theme-control" for="theme-select">
+        <span data-i18n="theme-label">Theme:</span>
+        <select id="theme-select" aria-label="Select theme">
+          <option value="system" data-i18n="theme-system">System</option>
+          <option value="dark" data-i18n="theme-dark">Dark</option>
+          <option value="light" data-i18n="theme-light">White</option>
+        </select>
+      </label>
+      <label class="theme-control" for="language-select">
+        <span data-i18n="lang-label">Language:</span>
+        <select id="language-select" data-lang-select aria-label="Select language">
+          <option value="en">English</option>
+          <option value="pt-BR">Português</option>
+        </select>
+      </label>
+    </div>
+  </header>
+
+  <main class="legal-page container">
+    <h1 data-i18n="terms-title">Terms of Use</h1>
+    <p class="muted" data-i18n="terms-updated">Last updated: April 2026</p>
+    <p data-i18n="terms-intro">These terms govern your use of QuickFocus desktop app and this website.</p>
+
+    <h2 data-i18n="terms-section-usage">1. Use of QuickFocus</h2>
+    <p data-i18n="terms-usage-1">QuickFocus is offered as Free and Pro plans. Free includes core productivity functionality. Pro includes expanded features defined in the product pages.</p>
+    <p data-i18n="terms-usage-2">You agree to use the app lawfully and not attempt to reverse, disrupt, or abuse platform services.</p>
+
+    <h2 data-i18n="terms-section-license">2. License and activation</h2>
+    <p data-i18n="terms-license-1">Pro features require valid activation according to the current upgrade flow.</p>
+    <p data-i18n="terms-license-2">License transfer and device limits follow the rules communicated in the official upgrade documentation.</p>
+
+    <h2 data-i18n="terms-section-liability">3. Availability and liability</h2>
+    <p data-i18n="terms-liability-1">QuickFocus is provided on an as-is basis. We continuously improve stability, but we do not guarantee uninterrupted availability.</p>
+    <p data-i18n="terms-liability-2">To the extent permitted by law, liability is limited for indirect losses or downtime related to usage, updates, or third-party platform issues.</p>
+
+    <h2 data-i18n="terms-section-changes">4. Changes</h2>
+    <p data-i18n="terms-changes-1">We may update these terms to reflect product or legal changes. New versions are published on this page.</p>
+  </main>
+
+  <footer class="container footer">
+    <p data-i18n="footer-product">QuickFocus for Windows</p>
+    <nav class="footer-links" aria-label="Institutional links">
+      <a href="terms.html" data-i18n="footer-terms">Terms</a>
+      <a href="privacy.html" data-i18n="footer-privacy">Privacy</a>
+      <a href="support.html" data-i18n="footer-support">Support</a>
+      <a href="third-party.html" data-i18n="footer-licenses">Licenses</a>
+    </nav>
+    <p>© <span id="year"></span> QuickFocus</p>
+  </footer>
+
+  <script src="assets/scripts/i18n.js"></script>
+  <script src="assets/scripts/main.js"></script>
+</body>
+</html>

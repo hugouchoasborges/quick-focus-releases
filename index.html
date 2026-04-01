@@ -1,10 +1,10 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>QuickFocus | Keyboard-first task flow for Windows</title>
-  <meta name="description" content="QuickFocus is a lightweight Windows productivity app with tray-first workflow, projects, workspaces, reminders, and focus tools.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="site-title">QuickFocus | Tray-first Windows productivity</title>
+  <meta data-i18n="site-description" data-i18n-attr="content" name="description" content="QuickFocus is a lightweight Windows productivity app with tray-first workflow, projects, workspaces, reminders, and focus tools.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -16,17 +16,24 @@
     <a class="brand" href="#top">QuickFocus</a>
     <div class="topbar-right">
       <nav>
-        <a href="#benefits">Benefits</a>
-        <a href="#media">Media</a>
-        <a href="#plans">Free vs Pro</a>
-        <a href="#faq">FAQ</a>
+        <a href="#benefits" data-i18n="nav-benefits">Benefits</a>
+        <a href="#media" data-i18n="nav-media">Media</a>
+        <a href="#plans" data-i18n="nav-plans">Free vs Pro</a>
+        <a href="#faq" data-i18n="nav-faq">FAQ</a>
       </nav>
       <label class="theme-control" for="theme-select">
-        <span>Theme</span>
+        <span data-i18n="theme-label">Theme:</span>
         <select id="theme-select" aria-label="Select theme">
-          <option value="system">System</option>
-          <option value="dark">Dark</option>
-          <option value="light">White</option>
+          <option value="system" data-i18n="theme-system">System</option>
+          <option value="dark" data-i18n="theme-dark">Dark</option>
+          <option value="light" data-i18n="theme-light">White</option>
+        </select>
+      </label>
+      <label class="theme-control" for="language-select">
+        <span data-i18n="lang-label">Language:</span>
+        <select id="language-select" data-lang-select aria-label="Select language">
+          <option value="en">English</option>
+          <option value="pt-BR">Português</option>
         </select>
       </label>
     </div>
@@ -35,104 +42,102 @@
   <main id="top">
     <section class="hero container">
       <div class="hero-copy">
-        <p class="eyebrow">Desktop productivity, without friction</p>
-        <h1>Focus faster with a tray-first workflow.</h1>
-        <p class="sub">QuickFocus keeps your tasks close, keyboard-ready, and lightweight, so you can move projects without context switching overload.</p>
+        <p class="eyebrow" data-i18n="hero-eyebrow">Desktop productivity, without friction</p>
+        <h1 data-i18n="hero-title">Focus faster with a tray-first workflow.</h1>
+        <p class="sub" data-i18n="hero-sub">QuickFocus keeps your tasks close, keyboard-ready, and lightweight, so you can move projects without context switching overload.</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/QuickFocus-Setup.exe">Download for Windows</a>
-          <a class="btn btn-secondary" href="https://hugouchoasborges.notion.site/" target="_blank" rel="noreferrer">Upgrade to Pro</a>
+          <a class="btn btn-primary" href="https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/QuickFocus-Setup.exe" data-i18n="hero-download">Download for Windows</a>
+          <a class="btn btn-secondary" href="https://hugouchoasborges.notion.site/" target="_blank" rel="noreferrer" data-i18n="hero-upgrade">Upgrade to Pro</a>
         </div>
         <div class="meta-links">
-          <a href="https://github.com/hugouchoasborges/quick-focus-releases/releases/latest" target="_blank" rel="noreferrer">Latest release</a>
-          <a href="https://github.com/hugouchoasborges/quick-focus-releases/releases" target="_blank" rel="noreferrer">Release history</a>
+          <a href="https://github.com/hugouchoasborges/quick-focus-releases/releases/latest" target="_blank" rel="noreferrer" data-i18n="hero-latest">Latest release</a>
+          <a href="https://github.com/hugouchoasborges/quick-focus-releases/releases" target="_blank" rel="noreferrer" data-i18n="hero-history">Release history</a>
         </div>
       </div>
       <div class="hero-visual">
         <div class="window-window">
-          <div class="window-head">
-            <span></span><span></span><span></span>
-          </div>
-          <img src="assets/images/mock-dashboard.svg" alt="QuickFocus app mockup">
+          <div class="window-bar"></div>
+          <img src="assets/images/mock-dashboard.svg" alt="QuickFocus dashboard preview">
         </div>
       </div>
     </section>
 
-    <section class="showcase container" aria-label="Product previews">
-      <img src="assets/images/mock-minimal.svg" alt="Minimal mode mockup">
-      <img src="assets/images/mock-dashboard.svg" alt="Workspace view mockup">
-      <img src="assets/images/mock-dashboard.svg" alt="Task flow mockup">
-    </section>
-
     <section id="media" class="media container">
-      <h2>Media Gallery</h2>
-      <p>Add your files to <code>/Images</code>, <code>/Gifs</code>, and <code>/Videos</code>, then list them in <code>media-manifest.json</code>.</p>
-      <div id="media-gallery" class="media-grid">
-        <article class="media-card">
-          <h3>Images</h3>
+      <h2 data-i18n="media-title">Media</h2>
+      <p data-i18n="media-sub">Screenshots, GIFs and videos from recent builds.</p>
+      <div class="media-grid">
+        <article>
+          <h3 data-i18n="media-images">Images</h3>
           <div class="media-items" data-kind="images"></div>
         </article>
-        <article class="media-card">
-          <h3>GIFs</h3>
+        <article>
+          <h3 data-i18n="media-gifs">GIFs</h3>
           <div class="media-items" data-kind="gifs"></div>
         </article>
-        <article class="media-card">
-          <h3>Videos</h3>
+        <article>
+          <h3 data-i18n="media-videos">Videos</h3>
           <div class="media-items" data-kind="videos"></div>
         </article>
       </div>
     </section>
 
     <section id="benefits" class="benefits container">
-      <h2>Built for momentum</h2>
-      <div class="grid-4">
-        <article><h3>Keyboard-first productivity</h3><p>Shortcuts, fast editing, and low-friction navigation keep your flow intact.</p></article>
-        <article><h3>Lightweight and fast</h3><p>Native desktop app tuned for responsiveness and predictable behavior.</p></article>
-        <article><h3>Tray-first workflow</h3><p>Stay available in your system tray with instant access when needed.</p></article>
-        <article><h3>Projects, workspaces, reminders</h3><p>Organize by context with focus tools like Pomodoro, tags, and alarms.</p></article>
+      <h2 data-i18n="benefits-title">What you get</h2>
+      <div class="grid-3">
+        <article><h3 data-i18n="benefit-1-title">Keyboard-first productivity</h3><p data-i18n="benefit-1-body">Shortcuts, fast editing, and low-friction navigation keep your flow intact.</p></article>
+        <article><h3 data-i18n="benefit-2-title">Tray-first desktop app</h3><p data-i18n="benefit-2-body">Keep QuickFocus always available without occupying your screen all day.</p></article>
+        <article><h3 data-i18n="benefit-3-title">Projects, workspaces, reminders</h3><p data-i18n="benefit-3-body">Organize by context with focus tools like Pomodoro, tags, and alarms.</p></article>
       </div>
     </section>
 
     <section id="plans" class="plans container">
-      <h2>Free vs Pro</h2>
+      <h2 data-i18n="plans-title">Free vs Pro</h2>
       <table>
         <thead>
-          <tr><th>Feature</th><th>Free</th><th>Pro</th></tr>
+          <tr><th data-i18n="plans-col-feature">Feature</th><th data-i18n="plans-col-free">Free</th><th data-i18n="plans-col-pro">Pro</th></tr>
         </thead>
         <tbody>
-          <tr><td>Projects</td><td>Up to 2</td><td>Unlimited</td></tr>
-          <tr><td>Custom workspaces</td><td>Up to 2</td><td>Unlimited</td></tr>
-          <tr><td>Google Drive sync</td><td>No</td><td>Yes</td></tr>
-          <tr><td>Tags</td><td>Basic</td><td>Custom tags and colors</td></tr>
-          <tr><td>Recurring tasks</td><td>No</td><td>Yes</td></tr>
-          <tr><td>Sound library</td><td>Limited</td><td>Full library</td></tr>
-          <tr><td>Alpha/Beta channels</td><td>No</td><td>Yes</td></tr>
+          <tr><td data-i18n="plans-row-projects">Projects</td><td data-i18n="plans-row-projects-free">Up to 2</td><td data-i18n="plans-row-projects-pro">Unlimited</td></tr>
+          <tr><td data-i18n="plans-row-workspaces">Custom workspaces</td><td data-i18n="plans-row-workspaces-free">Up to 2</td><td data-i18n="plans-row-workspaces-pro">Unlimited</td></tr>
+          <tr><td data-i18n="plans-row-sync">Google Drive sync</td><td data-i18n="plans-row-sync-free">No</td><td data-i18n="plans-row-sync-pro">Yes</td></tr>
+          <tr><td data-i18n="plans-row-tags">Tags</td><td data-i18n="plans-row-tags-free">Basic</td><td data-i18n="plans-row-tags-pro">Custom tags and colors</td></tr>
+          <tr><td data-i18n="plans-row-recurring">Recurring tasks</td><td data-i18n="plans-row-recurring-free">No</td><td data-i18n="plans-row-recurring-pro">Yes</td></tr>
+          <tr><td data-i18n="plans-row-sounds">Sound library</td><td data-i18n="plans-row-sounds-free">Limited</td><td data-i18n="plans-row-sounds-pro">Full library</td></tr>
+          <tr><td data-i18n="plans-row-channels">Alpha/Beta channels</td><td data-i18n="plans-row-channels-free">No</td><td data-i18n="plans-row-channels-pro">Yes</td></tr>
         </tbody>
       </table>
     </section>
 
     <section class="cta container">
-      <h2>Install in minutes. Keep your focus for hours.</h2>
+      <h2 data-i18n="cta-title">Install in minutes. Keep your focus for hours.</h2>
       <div class="cta-row">
-        <a class="btn btn-primary" href="https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/QuickFocus-Setup.exe">Download QuickFocus</a>
-        <a class="btn btn-secondary" href="https://hugouchoasborges.notion.site/" target="_blank" rel="noreferrer">Upgrade to Pro</a>
+        <a class="btn btn-primary" href="https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/QuickFocus-Setup.exe" data-i18n="cta-download">Download QuickFocus</a>
+        <a class="btn btn-secondary" href="https://hugouchoasborges.notion.site/" target="_blank" rel="noreferrer" data-i18n="cta-upgrade">Upgrade to Pro</a>
       </div>
     </section>
 
     <section id="faq" class="faq container">
-      <h2>FAQ</h2>
-      <details><summary>How do updates work?</summary><p>QuickFocus checks release manifests and guides you to install the latest stable build.</p></details>
-      <details><summary>Is QuickFocus free?</summary><p>Yes. The Free plan is available with core productivity features.</p></details>
-      <details><summary>How do I unlock Pro?</summary><p>Use the Upgrade to Pro link to activate a Pro license.</p></details>
-      <details><summary>Does Pro require a subscription?</summary><p>Current license options are managed in the official upgrade page.</p></details>
-      <details><summary>Can I use my license on another computer?</summary><p>License transfer and activation details are provided in the upgrade documentation.</p></details>
+      <h2 data-i18n="faq-title">FAQ</h2>
+      <details><summary data-i18n="faq-q-updates">How do updates work?</summary><p data-i18n="faq-a-updates">QuickFocus checks release manifests and guides you to install the latest stable build.</p></details>
+      <details><summary data-i18n="faq-q-free">Is QuickFocus free?</summary><p data-i18n="faq-a-free">Yes. The Free plan is available with core productivity features.</p></details>
+      <details><summary data-i18n="faq-q-unlock">How do I unlock Pro?</summary><p data-i18n="faq-a-unlock">Use the Upgrade to Pro link to activate a Pro license.</p></details>
+      <details><summary data-i18n="faq-q-subscription">Does Pro require a subscription?</summary><p data-i18n="faq-a-subscription">Current license options are managed in the official upgrade page.</p></details>
+      <details><summary data-i18n="faq-q-transfer">Can I use my license on another computer?</summary><p data-i18n="faq-a-transfer">License transfer and activation details are provided in the upgrade documentation.</p></details>
     </section>
   </main>
 
   <footer class="container footer">
-    <p>QuickFocus for Windows</p>
-    <p>© <span id="year"></span> QuickFocus</p>
+    <p data-i18n="footer-product">QuickFocus for Windows</p>
+    <nav class="footer-links" aria-label="Institutional links">
+      <a href="terms.html" data-i18n="footer-terms">Terms</a>
+      <a href="privacy.html" data-i18n="footer-privacy">Privacy</a>
+      <a href="support.html" data-i18n="footer-support">Support</a>
+      <a href="third-party.html" data-i18n="footer-licenses">Licenses</a>
+    </nav>
+    <p>� <span id="year"></span> QuickFocus</p>
   </footer>
 
+  <script src="assets/scripts/i18n.js"></script>
   <script src="assets/scripts/main.js"></script>
 </body>
 </html>

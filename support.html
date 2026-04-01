@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="support-title">Support</title>
+  <meta data-i18n="site-description" data-i18n-attr="content" name="description" content="QuickFocus is a lightweight Windows productivity app with tray-first workflow, projects, workspaces, reminders, and focus tools.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+  <link rel="stylesheet" href="assets/styles/main.css">
+</head>
+<body>
+  <header class="topbar container">
+    <a class="brand" href="index.html">QuickFocus</a>
+    <div class="topbar-right">
+      <nav>
+        <a href="index.html" data-i18n="nav-home">Home</a>
+        <a href="terms.html" data-i18n="nav-terms">Terms</a>
+        <a href="privacy.html" data-i18n="nav-privacy">Privacy</a>
+        <a href="support.html" data-i18n="nav-support">Support</a>
+        <a href="third-party.html" data-i18n="nav-licenses">Licenses</a>
+      </nav>
+      <label class="theme-control" for="theme-select">
+        <span data-i18n="theme-label">Theme:</span>
+        <select id="theme-select" aria-label="Select theme">
+          <option value="system" data-i18n="theme-system">System</option>
+          <option value="dark" data-i18n="theme-dark">Dark</option>
+          <option value="light" data-i18n="theme-light">White</option>
+        </select>
+      </label>
+      <label class="theme-control" for="language-select">
+        <span data-i18n="lang-label">Language:</span>
+        <select id="language-select" data-lang-select aria-label="Select language">
+          <option value="en">English</option>
+          <option value="pt-BR">Português</option>
+        </select>
+      </label>
+    </div>
+  </header>
+
+  <main class="legal-page container">
+    <h1 data-i18n="support-title">Support</h1>
+    <p class="muted" data-i18n="support-updated">Need help with QuickFocus?</p>
+    <p data-i18n="support-intro">Use the channels below for installation, update, license, and sync issues.</p>
+
+    <h2 data-i18n="support-section-channels">1. Support channels</h2>
+    <ul class="support-list">
+      <li>
+        <span data-i18n="support-channel-issues">Bug reports and feature issues: GitHub Issues</span>
+        <a href="https://github.com/hugouchoasborges/quick-focus/issues" target="_blank" rel="noreferrer" data-i18n="common-open">Open</a>
+      </li>
+      <li>
+        <span data-i18n="support-channel-releases">Installer and release history: QuickFocus Releases</span>
+        <a href="https://github.com/hugouchoasborges/quick-focus-releases/releases" target="_blank" rel="noreferrer" data-i18n="common-open">Open</a>
+      </li>
+    </ul>
+
+    <h2 data-i18n="support-section-before">2. Before opening an issue</h2>
+    <ul class="support-list">
+      <li data-i18n="support-before-1">Confirm you are on the latest stable installer.</li>
+      <li data-i18n="support-before-2">Include steps to reproduce, expected behavior, and what happened.</li>
+      <li data-i18n="support-before-3">When relevant, include app version and whether Google Drive sync is enabled.</li>
+    </ul>
+
+    <h2 data-i18n="support-section-troubleshoot">3. Quick troubleshooting</h2>
+    <ul class="support-list">
+      <li data-i18n="support-troubleshoot-1">Retry after restarting QuickFocus.</li>
+      <li data-i18n="support-troubleshoot-2">Reinstall with the latest installer if update flow fails.</li>
+      <li data-i18n="support-troubleshoot-3">For sync errors, disconnect/reconnect Google Drive and retry sync.</li>
+    </ul>
+  </main>
+
+  <footer class="container footer">
+    <p data-i18n="footer-product">QuickFocus for Windows</p>
+    <nav class="footer-links" aria-label="Institutional links">
+      <a href="terms.html" data-i18n="footer-terms">Terms</a>
+      <a href="privacy.html" data-i18n="footer-privacy">Privacy</a>
+      <a href="support.html" data-i18n="footer-support">Support</a>
+      <a href="third-party.html" data-i18n="footer-licenses">Licenses</a>
+    </nav>
+    <p>© <span id="year"></span> QuickFocus</p>
+  </footer>
+
+  <script src="assets/scripts/i18n.js"></script>
+  <script src="assets/scripts/main.js"></script>
+</body>
+</html>
