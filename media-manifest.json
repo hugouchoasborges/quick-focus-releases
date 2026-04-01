@@ -1,5 +1,27 @@
-﻿{
-  "images": [],
-  "gifs": [],
-  "videos": []
+{
+    "images":  [
+                   "Images/01-06-49[3504]_QuickPen.png",
+                   "Images/01-06-49[3505]_QuickPen.png",
+                   "Images/01-06-50[3506]_QuickPen.png",
+                   "Images/01-06-50[3507]_QuickPen.png",
+                   "Images/01-06-51[3508]_QuickFocus.png",
+                   "Images/01-06-51[3509]_QuickFocus.png",
+                   "Images/01-06-51[3510]_QuickFocus.png",
+                   "Images/01-06-52[3511]_QuickFocus.png",
+                   "Images/01-06-52[3512]_QuickFocus.png",
+                   "Images/01-06-52[3513]_QuickFocus.png",
+                   "Images/01-06-53[3514]_QuickPen.png",
+                   "Images/01-06-53[3515]_QuickFocus.png",
+                   "Images/01-06-53[3516]_QuickFocus.png",
+                   "Images/01-06-53[3517]_QuickFocus.png",
+                   "Images/01-06-54[3518]_QuickFocus.png",
+                   "Images/01-06-54[3519]_QuickFocus.png"
+               ],
+    "gifs":  [
+                 "Gifs/01_06-42-56-quickfocus.gif",
+                 "Gifs/01_06-57-57-quickfocus.gif"
+             ],
+    "videos":  [
+
+               ]
 }
