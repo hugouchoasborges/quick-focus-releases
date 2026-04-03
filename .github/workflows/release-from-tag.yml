@@ -27,11 +27,16 @@ jobs:
           VERSION="${TAG_NAME#v}"
           RELEASE_DIR="releases/${VERSION}"
           INSTALLER_PATH="${RELEASE_DIR}/QuickFocus-Setup.exe"
+          INSTALLER_ZIP_PATH="${RELEASE_DIR}/QuickFocus-Setup.zip"
           INFO_PATH="${RELEASE_DIR}/release-info.json"
           NOTES_PATH="${RELEASE_DIR}/release-notes.md"
 
           if [ ! -f "${INSTALLER_PATH}" ]; then
             echo "Missing installer file: ${INSTALLER_PATH}" >&2
+            exit 1
+          fi
+          if [ ! -f "${INSTALLER_ZIP_PATH}" ]; then
+            echo "Missing installer zip file: ${INSTALLER_ZIP_PATH}" >&2
             exit 1
           fi
           if [ ! -f "${INFO_PATH}" ]; then
@@ -77,6 +82,7 @@ jobs:
             echo "version=${VERSION}"
             echo "release_dir=${RELEASE_DIR}"
             echo "installer_path=${INSTALLER_PATH}"
+            echo "installer_zip_path=${INSTALLER_ZIP_PATH}"
             echo "info_path=${INFO_PATH}"
             echo "notes_path=${NOTES_PATH}"
             echo "release_date_utc=${RELEASE_DATE_UTC}"
@@ -94,7 +100,9 @@ jobs:
           tag_name: ${{ steps.vars.outputs.tag_name }}
           name: ${{ steps.vars.outputs.release_name }}
           body_path: ${{ steps.vars.outputs.notes_path }}
-          files: ${{ steps.vars.outputs.installer_path }}
+          files: |
+            ${{ steps.vars.outputs.installer_path }}
+            ${{ steps.vars.outputs.installer_zip_path }}
           prerelease: ${{ steps.vars.outputs.prerelease }}
           make_latest: ${{ steps.vars.outputs.make_latest }}
 
