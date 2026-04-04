@@ -31,19 +31,18 @@ This branch (`gh-pages`) hosts only the public website.
 
 ### Media folders and gallery
 
-- Add assets to:
-  - `Images/`
-  - `Gifs/`
-  - `Videos/`
-- List files in `media-manifest.json`:
-  - `images`: array of paths (e.g. `Images/screenshot-1.png`)
-  - `gifs`: array of paths (e.g. `Gifs/demo.gif`)
-  - `videos`: array of paths (e.g. `Videos/flow.mp4`)
+- Add assets to theme+language variants:
+  - `dark-en/Images`, `dark-en/Gifs`, `dark-en/Videos`
+  - `dark-pt/Images`, `dark-pt/Gifs`, `dark-pt/Videos`
+  - `white-en/Images`, `white-en/Gifs`, `white-en/Videos`
+  - `white-pt/Images`, `white-pt/Gifs`, `white-pt/Videos`
+- The website gallery is resolved dynamically from files in the selected variant folder.
+- The `Media` section is hidden automatically when the active variant has no media files.
 
 ## Download and upgrade links
 
 - Download (stable asset name):
-  - `https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/QuickFocus-Setup.exe`
+  - `https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/QuickFocus-Setup.zip`
 - Upgrade:
   - `https://hugouchoasborges.notion.site/`
 

@@ -2,6 +2,9 @@
 const LATEST_DOWNLOAD_FILENAME = "QuickFocus-Setup.zip";
 const LATEST_DOWNLOAD_URL = `https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/${LATEST_DOWNLOAD_FILENAME}`;
 const MEDIA_FOLDERS = new Set(["Images", "Gifs", "Videos"]);
+const MEDIA_TREE_API_URL = "https://api.github.com/repos/hugouchoasborges/quick-focus-releases/git/trees/gh-pages?recursive=1";
+const MEDIA_IMAGE_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp", ".avif", ".svg"]);
+const MEDIA_VIDEO_EXTENSIONS = new Set([".mp4", ".webm", ".mov", ".m4v"]);
 
 function resolveTheme(selectedTheme) {
   if (selectedTheme === "dark") {
@@ -120,40 +123,110 @@ function initializeTheme() {
 
 function isVideo(path) {
   const lower = path.toLowerCase();
-  return lower.endsWith(".mp4") || lower.endsWith(".webm");
+  const extensionIndex = lower.lastIndexOf(".");
+  if (extensionIndex < 0) {
+    return false;
+  }
+  return MEDIA_VIDEO_EXTENSIONS.has(lower.slice(extensionIndex));
 }
 
-function createMediaItems(manifest) {
-  return [
-    ...(manifest.images || []),
-    ...(manifest.gifs || []),
-    ...(manifest.videos || [])
-  ].map((path) => ({ path, kind: isVideo(path) ? "video" : "image" }));
+function mediaExtension(path) {
+  const lower = String(path || "").toLowerCase();
+  const extensionIndex = lower.lastIndexOf(".");
+  if (extensionIndex < 0) {
+    return "";
+  }
+  return lower.slice(extensionIndex);
 }
 
-let cachedManifest = null;
+function isSupportedVariantMediaPath(path, variant) {
+  if (!path || !path.startsWith(`${variant}/`)) {
+    return false;
+  }
+  const segments = path.split("/");
+  if (segments.length < 3) {
+    return false;
+  }
+  const folder = segments[1];
+  if (!MEDIA_FOLDERS.has(folder)) {
+    return false;
+  }
+  const filename = segments.slice(2).join("/");
+  if (!filename || filename.startsWith(".") || filename.toLowerCase() === "readme.md") {
+    return false;
+  }
+  const extension = mediaExtension(filename);
+  if (!extension) {
+    return false;
+  }
+  if (folder === "Videos") {
+    return MEDIA_VIDEO_EXTENSIONS.has(extension);
+  }
+  return MEDIA_IMAGE_EXTENSIONS.has(extension);
+}
+
+function pathWeight(path) {
+  const normalized = String(path || "").toLowerCase();
+  if (normalized.includes("/images/preview.")) {
+    return 0;
+  }
+  if (normalized.includes("/images/")) {
+    return 1;
+  }
+  if (normalized.includes("/gifs/")) {
+    return 2;
+  }
+  return 3;
+}
+
+let cachedRepoTreePaths = null;
 let mediaItems = [];
 let mediaIndex = 0;
 let mediaEventsBound = false;
 let mediaRenderCycle = 0;
 
-async function loadManifest() {
-  if (cachedManifest) {
-    return cachedManifest;
+async function loadRepoTreePaths() {
+  if (cachedRepoTreePaths) {
+    return cachedRepoTreePaths;
   }
 
-  const response = await fetch("media-manifest.json", { cache: "no-store" });
+  const response = await fetch(MEDIA_TREE_API_URL, { cache: "no-store" });
   if (!response.ok) {
-    throw new Error("Manifest unavailable");
+    throw new Error("Repository tree unavailable");
   }
 
-  cachedManifest = await response.json();
-  return cachedManifest;
+  const payload = await response.json();
+  const tree = Array.isArray(payload && payload.tree) ? payload.tree : [];
+  cachedRepoTreePaths = tree
+    .filter((entry) => entry && entry.type === "blob" && typeof entry.path === "string")
+    .map((entry) => entry.path);
+  return cachedRepoTreePaths;
 }
 
-async function resolveMediaItems(items) {
-  const resolvedPaths = await Promise.all(items.map((item) => resolveMediaPath(item.path)));
-  return items.map((item, index) => ({ ...item, path: resolvedPaths[index] }));
+async function loadVariantMediaItems(variant) {
+  const treePaths = await loadRepoTreePaths();
+  const variantPaths = treePaths
+    .filter((path) => isSupportedVariantMediaPath(path, variant))
+    .sort((left, right) => {
+      const byWeight = pathWeight(left) - pathWeight(right);
+      if (byWeight !== 0) {
+        return byWeight;
+      }
+      return left.localeCompare(right, undefined, { sensitivity: "base" });
+    });
+
+  return variantPaths.map((path) => ({
+    path,
+    kind: isVideo(path) ? "video" : "image"
+  }));
+}
+
+function toggleMediaSection(hasItems) {
+  const section = document.getElementById("media");
+  if (!section) {
+    return;
+  }
+  section.hidden = !hasItems;
 }
 
 function renderMediaCard(item, index) {
@@ -281,8 +354,8 @@ function bindMediaEvents() {
 }
 
 async function initializeMedia() {
-  const hasMedia = document.querySelector("[data-media-grid]");
-  if (!hasMedia) {
+  const grid = document.querySelector("[data-media-grid]");
+  if (!grid) {
     return;
   }
 
@@ -294,9 +367,7 @@ async function initializeMedia() {
   document.body.classList.remove("media-lightbox-open");
 
   try {
-    const manifest = await loadManifest();
-    const items = createMediaItems(manifest);
-    mediaItems = await resolveMediaItems(items);
+    mediaItems = await loadVariantMediaItems(currentVariant());
   } catch (_error) {
     mediaItems = [];
   }
@@ -306,6 +377,7 @@ async function initializeMedia() {
   }
 
   renderMediaGrid(mediaItems);
+  toggleMediaSection(mediaItems.length > 0);
   bindMediaEvents();
 }
 
