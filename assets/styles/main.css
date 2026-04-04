@@ -223,9 +223,9 @@ h3 { font-size: 1.1rem; margin-bottom: .35rem; }
   border-radius: 12px;
   padding: .95rem;
   background: color-mix(in srgb, var(--panel) 94%, #f2f8fd);
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: .7rem;
-  align-content: start;
 }
 
 .pricing-card-featured {
@@ -263,6 +263,10 @@ h3 { font-size: 1.1rem; margin-bottom: .35rem; }
   display: grid;
   gap: .35rem;
   color: var(--muted);
+}
+
+.pricing-card .btn {
+  margin-top: auto;
 }
 
 .plans-note {
