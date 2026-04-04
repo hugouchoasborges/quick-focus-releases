@@ -206,6 +206,71 @@ h3 { font-size: 1.1rem; margin-bottom: .35rem; }
 
 .media p { margin-bottom: .9rem; }
 
+.plans-sub {
+  margin: 0 0 1rem;
+  color: var(--muted);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .85rem;
+}
+
+.pricing-card {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: .95rem;
+  background: color-mix(in srgb, var(--panel) 94%, #f2f8fd);
+  display: grid;
+  gap: .7rem;
+  align-content: start;
+}
+
+.pricing-card-featured {
+  border-color: color-mix(in srgb, var(--brand) 55%, var(--line));
+  box-shadow: 0 10px 20px rgba(7, 38, 45, 0.1);
+}
+
+.plan-badge {
+  position: absolute;
+  top: .75rem;
+  right: .75rem;
+  font-size: .73rem;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--brand) 92%, white);
+  color: #fff;
+  border-radius: 999px;
+  padding: .22rem .5rem;
+}
+
+.pricing-desc {
+  margin: 0;
+  color: var(--muted);
+  min-height: 2.4em;
+}
+
+.pricing-price {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.55rem;
+}
+
+.pricing-list {
+  margin: 0;
+  padding-left: 1rem;
+  display: grid;
+  gap: .35rem;
+  color: var(--muted);
+}
+
+.plans-note {
+  margin: .95rem 0 0;
+  color: var(--muted);
+  font-size: .95rem;
+}
+
 .media-gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -325,6 +390,7 @@ summary { cursor: pointer; font-weight: 600; }
   .hero { grid-template-columns: 1fr; }
   .showcase { grid-template-columns: 1fr 1fr; }
   .media-gallery-grid { grid-template-columns: 1fr 1fr; }
+  .pricing-grid { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 640px) {
@@ -334,6 +400,7 @@ summary { cursor: pointer; font-weight: 600; }
   .showcase { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: 1fr; }
   .media-gallery-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
   .media-lightbox { grid-template-columns: 1fr; }
   .media-lightbox-prev,
   .media-lightbox-next { display: none; }

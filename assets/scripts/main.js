@@ -1,4 +1,7 @@
 ﻿const THEME_KEY = "quickfocus-theme";
+const LATEST_DOWNLOAD_FILENAME = "QuickFocus-Setup.zip";
+const LATEST_DOWNLOAD_URL = `https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/${LATEST_DOWNLOAD_FILENAME}`;
+const MEDIA_FOLDERS = new Set(["Images", "Gifs", "Videos"]);
 
 function resolveTheme(selectedTheme) {
   if (selectedTheme === "dark") {
@@ -10,9 +13,85 @@ function resolveTheme(selectedTheme) {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
+function languageKey(inputLanguage) {
+  return String(inputLanguage || "").toLowerCase().startsWith("pt") ? "pt" : "en";
+}
+
+function currentLanguage() {
+  return document.documentElement.lang || (window.QuickFocusI18n && window.QuickFocusI18n.getPreferredLanguage && window.QuickFocusI18n.getPreferredLanguage()) || "en";
+}
+
+function currentTheme() {
+  const effectiveTheme = document.documentElement.getAttribute("data-theme");
+  if (effectiveTheme === "dark") {
+    return "dark";
+  }
+  return "light";
+}
+
+function currentVariant() {
+  const themeKey = currentTheme() === "dark" ? "dark" : "white";
+  return `${themeKey}-${languageKey(currentLanguage())}`;
+}
+
+function mediaVariantFallbacks() {
+  const variant = currentVariant();
+  const [themeKey, language] = variant.split("-");
+  const fallbackTheme = themeKey === "dark" ? "white" : "dark";
+  const ordered = [
+    variant,
+    `${themeKey}-en`,
+    `${fallbackTheme}-${language}`,
+    "white-en"
+  ];
+  return ordered.filter((value, index) => ordered.indexOf(value) === index);
+}
+
+function candidatePathsFor(path) {
+  const split = String(path || "").split("/");
+  const folder = split[0];
+  if (!MEDIA_FOLDERS.has(folder) || split.length < 2) {
+    return [path];
+  }
+  const file = split.slice(1).join("/");
+  const candidates = [
+    ...mediaVariantFallbacks().map((variant) => `${variant}/${folder}/${file}`),
+    path
+  ];
+  return candidates.filter((value, index) => candidates.indexOf(value) === index);
+}
+
+const assetAvailabilityCache = new Map();
+
+async function assetExists(path) {
+  if (assetAvailabilityCache.has(path)) {
+    return assetAvailabilityCache.get(path);
+  }
+  let exists = false;
+  try {
+    const response = await fetch(path, { method: "HEAD", cache: "no-store" });
+    exists = response.ok;
+  } catch (_error) {
+    exists = false;
+  }
+  assetAvailabilityCache.set(path, exists);
+  return exists;
+}
+
+async function resolveMediaPath(path) {
+  const candidates = candidatePathsFor(path);
+  for (const candidate of candidates) {
+    if (await assetExists(candidate)) {
+      return candidate;
+    }
+  }
+  return path;
+}
+
 function applyTheme(selectedTheme) {
   const effectiveTheme = resolveTheme(selectedTheme);
   document.documentElement.setAttribute("data-theme", effectiveTheme);
+  window.dispatchEvent(new CustomEvent("quickfocus:theme-changed", { detail: { theme: effectiveTheme } }));
 }
 
 function initializeTheme() {
@@ -56,6 +135,7 @@ let cachedManifest = null;
 let mediaItems = [];
 let mediaIndex = 0;
 let mediaEventsBound = false;
+let mediaRenderCycle = 0;
 
 async function loadManifest() {
   if (cachedManifest) {
@@ -69,6 +149,11 @@ async function loadManifest() {
 
   cachedManifest = await response.json();
   return cachedManifest;
+}
+
+async function resolveMediaItems(items) {
+  const resolvedPaths = await Promise.all(items.map((item) => resolveMediaPath(item.path)));
+  return items.map((item, index) => ({ ...item, path: resolvedPaths[index] }));
 }
 
 function renderMediaCard(item, index) {
@@ -201,6 +286,7 @@ async function initializeMedia() {
     return;
   }
 
+  const currentCycle = ++mediaRenderCycle;
   const lightbox = document.querySelector("[data-media-lightbox]");
   if (lightbox) {
     lightbox.hidden = true;
@@ -209,13 +295,45 @@ async function initializeMedia() {
 
   try {
     const manifest = await loadManifest();
-    mediaItems = createMediaItems(manifest);
+    const items = createMediaItems(manifest);
+    mediaItems = await resolveMediaItems(items);
   } catch (_error) {
     mediaItems = [];
   }
 
+  if (currentCycle !== mediaRenderCycle) {
+    return;
+  }
+
   renderMediaGrid(mediaItems);
   bindMediaEvents();
+}
+
+async function initializeHeroMedia() {
+  const images = document.querySelectorAll("[data-media-asset]");
+  if (!images.length) {
+    return;
+  }
+  const updates = [];
+  images.forEach((image) => {
+    if (image instanceof HTMLImageElement) {
+      updates.push(resolveMediaPath(image.getAttribute("data-media-asset") || "").then((path) => {
+        if (path) {
+          image.src = path;
+        }
+      }));
+    }
+  });
+  await Promise.all(updates);
+}
+
+function initializeLatestDownloadLinks() {
+  const links = document.querySelectorAll("[data-latest-download]");
+  links.forEach((link) => {
+    if (link instanceof HTMLAnchorElement) {
+      link.href = LATEST_DOWNLOAD_URL;
+    }
+  });
 }
 
 function initializeYear() {
@@ -235,9 +353,17 @@ function initializeLanguage() {
 
 window.addEventListener("quickfocus:language-changed", () => {
   initializeMedia();
+  initializeHeroMedia();
+});
+
+window.addEventListener("quickfocus:theme-changed", () => {
+  initializeMedia();
+  initializeHeroMedia();
 });
 
 initializeTheme();
 initializeLanguage();
+initializeLatestDownloadLinks();
 initializeMedia();
+initializeHeroMedia();
 initializeYear();

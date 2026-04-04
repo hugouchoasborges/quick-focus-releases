@@ -46,14 +46,14 @@
         <h1 data-i18n="hero-title">Focus faster with a tray-first workflow.</h1>
         <p class="sub" data-i18n="hero-sub">QuickFocus keeps your tasks close, keyboard-ready, and lightweight, so you can move projects without context switching overload.</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/QuickFocus-Setup.exe" data-i18n="hero-download">Download for Windows</a>
+          <a class="btn btn-primary" href="https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/QuickFocus-Setup.zip" data-latest-download data-i18n="hero-download">Download for Windows</a>
           <a class="btn btn-secondary" href="https://hugouchoasborges.notion.site/" target="_blank" rel="noreferrer" data-i18n="hero-upgrade">Upgrade to Pro</a>
         </div>
       </div>
       <div class="hero-visual">
         <div class="window-window">
           <div class="window-bar"></div>
-          <img src="Images/01-06-51[3509]_QuickFocus.png" alt="QuickFocus dashboard preview">
+          <img src="Images/01-06-51[3509]_QuickFocus.png" data-media-asset="Images/01-06-51[3509]_QuickFocus.png" alt="QuickFocus dashboard preview">
         </div>
       </div>
     </section>
@@ -80,27 +80,65 @@
     </section>
 
     <section id="plans" class="plans container">
-      <h2 data-i18n="plans-title">Free vs Pro</h2>
-      <table>
-        <thead>
-          <tr><th data-i18n="plans-col-feature">Feature</th><th data-i18n="plans-col-free">Free</th><th data-i18n="plans-col-pro">Pro</th></tr>
-        </thead>
-        <tbody>
-          <tr><td data-i18n="plans-row-projects">Projects</td><td data-i18n="plans-row-projects-free">Up to 2</td><td data-i18n="plans-row-projects-pro">Unlimited</td></tr>
-          <tr><td data-i18n="plans-row-workspaces">Custom workspaces</td><td data-i18n="plans-row-workspaces-free">Up to 2</td><td data-i18n="plans-row-workspaces-pro">Unlimited</td></tr>
-          <tr><td data-i18n="plans-row-sync">Google Drive sync</td><td data-i18n="plans-row-sync-free">No</td><td data-i18n="plans-row-sync-pro">Yes</td></tr>
-          <tr><td data-i18n="plans-row-tags">Tags</td><td data-i18n="plans-row-tags-free">Basic</td><td data-i18n="plans-row-tags-pro">Custom tags and colors</td></tr>
-          <tr><td data-i18n="plans-row-recurring">Recurring tasks</td><td data-i18n="plans-row-recurring-free">No</td><td data-i18n="plans-row-recurring-pro">Yes</td></tr>
-          <tr><td data-i18n="plans-row-sounds">Sound library</td><td data-i18n="plans-row-sounds-free">Limited</td><td data-i18n="plans-row-sounds-pro">Full library</td></tr>
-          <tr><td data-i18n="plans-row-channels">Alpha/Beta channels</td><td data-i18n="plans-row-channels-free">No</td><td data-i18n="plans-row-channels-pro">Yes</td></tr>
-        </tbody>
-      </table>
+      <h2 data-i18n="plans-title">Choose the plan that fits your workflow</h2>
+      <p class="plans-sub" data-i18n="plans-sub">Start for free, then upgrade only if you need more power.</p>
+      <div class="pricing-grid">
+        <article class="pricing-card">
+          <h3 data-i18n="plan-free-title">Free</h3>
+          <p class="pricing-desc" data-i18n="plan-free-desc">For getting started with QuickFocus.</p>
+          <ul class="pricing-list">
+            <li data-i18n="plan-free-bullet-1">Basic task management</li>
+            <li data-i18n="plan-free-bullet-2">Limited workspaces and projects</li>
+            <li data-i18n="plan-free-bullet-3">Core workflow access</li>
+            <li data-i18n="plan-free-bullet-4">No payment required</li>
+          </ul>
+          <a class="btn btn-secondary" href="https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/QuickFocus-Setup.zip" data-latest-download data-i18n="plan-free-cta">Download Free</a>
+        </article>
+        <article class="pricing-card">
+          <h3 data-i18n="plan-monthly-title">Pro Monthly</h3>
+          <p class="pricing-desc" data-i18n="plan-monthly-desc">Flexible access with a low entry cost.</p>
+          <p class="pricing-price">$2</p>
+          <ul class="pricing-list">
+            <li data-i18n="plan-monthly-bullet-1">Full Pro features</li>
+            <li data-i18n="plan-monthly-bullet-2">Valid for 1 month</li>
+            <li data-i18n="plan-monthly-bullet-3">Great for trying Pro</li>
+            <li data-i18n="plan-monthly-bullet-4">Cancel anytime</li>
+          </ul>
+          <a class="btn btn-secondary" href="https://hugouchoasborges.notion.site/" target="_blank" rel="noreferrer" data-i18n="plan-monthly-cta">Get Monthly</a>
+        </article>
+        <article class="pricing-card">
+          <h3 data-i18n="plan-yearly-title">Pro Yearly</h3>
+          <p class="pricing-desc" data-i18n="plan-yearly-desc">Lower cost over time for regular use.</p>
+          <p class="pricing-price">$9</p>
+          <ul class="pricing-list">
+            <li data-i18n="plan-yearly-bullet-1">Full Pro features</li>
+            <li data-i18n="plan-yearly-bullet-2">Valid for 1 year</li>
+            <li data-i18n="plan-yearly-bullet-3">Better value than monthly</li>
+            <li data-i18n="plan-yearly-bullet-4">Simple annual payment</li>
+          </ul>
+          <a class="btn btn-secondary" href="https://hugouchoasborges.notion.site/" target="_blank" rel="noreferrer" data-i18n="plan-yearly-cta">Get Yearly</a>
+        </article>
+        <article class="pricing-card pricing-card-featured">
+          <span class="plan-badge" data-i18n="plan-lifetime-badge">Recommended</span>
+          <h3 data-i18n="plan-lifetime-title">Pro Lifetime</h3>
+          <p class="pricing-desc" data-i18n="plan-lifetime-desc">Pay once and keep it forever.</p>
+          <p class="pricing-price">$19</p>
+          <ul class="pricing-list">
+            <li data-i18n="plan-lifetime-bullet-1">Full Pro features</li>
+            <li data-i18n="plan-lifetime-bullet-2">Lifetime activation</li>
+            <li data-i18n="plan-lifetime-bullet-3">Best long-term value</li>
+            <li data-i18n="plan-lifetime-bullet-4">One-time payment</li>
+          </ul>
+          <a class="btn btn-primary" href="https://hugouchoasborges.notion.site/" target="_blank" rel="noreferrer" data-i18n="plan-lifetime-cta">Get Lifetime</a>
+        </article>
+      </div>
+      <p class="plans-note" data-i18n="plans-note">All Pro plans unlock the same premium features. The only difference is how long your activation lasts.</p>
     </section>
 
     <section class="cta container">
       <h2 data-i18n="cta-title">Install in minutes. Keep your focus for hours.</h2>
       <div class="cta-row">
-        <a class="btn btn-primary" href="https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/QuickFocus-Setup.exe" data-i18n="cta-download">Download QuickFocus</a>
+        <a class="btn btn-primary" href="https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/QuickFocus-Setup.zip" data-latest-download data-i18n="cta-download">Download QuickFocus</a>
         <a class="btn btn-secondary" href="https://hugouchoasborges.notion.site/" target="_blank" rel="noreferrer" data-i18n="cta-upgrade">Upgrade to Pro</a>
       </div>
     </section>
