@@ -3,5 +3,6 @@
   "releaseDateUtc": "2026-04-04T00:00:00Z",
   "installerUrl": "https://github.com/hugouchoasborges/quick-focus-releases/releases/download/v1.5.8b/QuickFocus-Setup.exe",
   "installerSha256": "54500FFBAEEB35E5F47DE14B50634D4E20B01A48AA4D05BBEC3251BE4FFA78A4",
-  "releaseNotesUrl": "https://github.com/hugouchoasborges/quick-focus-releases/releases/tag/v1.5.8b"
+  "releaseNotesUrl": "https://github.com/hugouchoasborges/quick-focus-releases/releases/tag/v1.5.8b",
+  "storeUrl": "https://quicklabs.lemonsqueezy.com/checkout/buy/a0847e64-36db-461c-b79d-958d2a3e85e1?enabled=1491098"
 }
