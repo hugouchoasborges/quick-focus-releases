@@ -621,5 +621,12 @@
     "installerUrl": "https://github.com/hugouchoasborges/quick-focus-releases/releases/download/v1.5.8b/QuickFocus-Setup.exe",
     "installerSha256": "54500FFBAEEB35E5F47DE14B50634D4E20B01A48AA4D05BBEC3251BE4FFA78A4",
     "releaseNotesUrl": "https://github.com/hugouchoasborges/quick-focus-releases/releases/tag/v1.5.8b"
+  },
+  {
+    "version": "1.5.9b",
+    "releaseDateUtc": "2026-04-05T00:00:00Z",
+    "installerUrl": "https://github.com/hugouchoasborges/quick-focus-releases/releases/download/v1.5.9b/QuickFocus-Setup.exe",
+    "installerSha256": "65145A9FC0345AE79D20B4776A906D2EF39DB74976077D6C6EFA88AE668BF72A",
+    "releaseNotesUrl": "https://github.com/hugouchoasborges/quick-focus-releases/releases/tag/v1.5.9b"
   }
 ]
