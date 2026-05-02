@@ -67,13 +67,13 @@
     "plan-yearly-cta": { en: "Get Yearly", pt: "Assinar Anual" },
     "plan-lifetime-title": { en: "Pro Lifetime", pt: "Pro Vitalício" },
     "plan-lifetime-desc": { en: "Pay once and keep it forever.", pt: "Pague uma vez e use para sempre." },
-    "plan-lifetime-badge": { en: "Recommended", pt: "Recomendado" },
+    "plan-lifetime-badge": { en: "Launch Discount", pt: "Desconto de Lancamento" },
     "plan-lifetime-bullet-1": { en: "Full Pro features", pt: "Todos os recursos Pro" },
     "plan-lifetime-bullet-2": { en: "Lifetime activation", pt: "Ativação vitalícia" },
     "plan-lifetime-bullet-3": { en: "Best long-term value", pt: "Melhor custo-benefício no longo prazo" },
     "plan-lifetime-bullet-4": { en: "One-time payment", pt: "Pagamento único" },
     "plan-lifetime-cta": { en: "Get Lifetime", pt: "Comprar Vitalício" },
-    "plans-note": { en: "All Pro plans unlock the same premium features. The only difference is how long your activation lasts.", pt: "Todos os planos Pro desbloqueiam os mesmos recursos premium. A única diferença é a duração da ativação." },
+    "plans-note": { en: "Pro unlocks all premium features with a one-time payment.", pt: "Pro desbloqueia todos os recursos premium com pagamento unico." },
     "cta-title": { en: "Install in minutes. Keep your focus for hours.", pt: "Instale em minutos. Mantenha seu foco por horas." },
     "cta-download": { en: "Download QuickFocus", pt: "Baixar QuickFocus" },
     "cta-upgrade": { en: "Upgrade to Pro", pt: "Fazer upgrade para Pro" },
@@ -161,11 +161,7 @@
   }
 
   function getPreferredLanguage() {
-    const saved = localStorage.getItem(LANGUAGE_KEY);
-    if (saved) {
-      return normalizeLanguage(saved);
-    }
-    return normalizeLanguage(navigator.language || navigator.userLanguage || "en");
+    return "en";
   }
 
   function resolveText(key, language) {
@@ -178,7 +174,7 @@
   }
 
   function applyTranslations(language) {
-    const activeLanguage = normalizeLanguage(language);
+    const activeLanguage = "en";
     const elements = document.querySelectorAll("[data-i18n]");
 
     elements.forEach((element) => {
@@ -196,23 +192,13 @@
       }
     });
 
-    const selectors = document.querySelectorAll("[data-lang-select]");
-    selectors.forEach((select) => {
-      select.value = activeLanguage;
-    });
-
     document.documentElement.lang = activeLanguage;
     localStorage.setItem(LANGUAGE_KEY, activeLanguage);
     window.dispatchEvent(new CustomEvent("quickfocus:language-changed", { detail: { language: activeLanguage } }));
   }
 
   function initializeLanguageSelector() {
-    const selectors = document.querySelectorAll("[data-lang-select]");
-    selectors.forEach((select) => {
-      select.addEventListener("change", () => {
-        applyTranslations(select.value);
-      });
-    });
+    // Language selection is intentionally disabled; site is English-only.
   }
 
   function initialize() {

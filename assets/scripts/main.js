@@ -2,7 +2,7 @@
 const LATEST_DOWNLOAD_FILENAME = "QuickFocus-Setup.zip";
 const LATEST_DOWNLOAD_URL = `https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/${LATEST_DOWNLOAD_FILENAME}`;
 const LATEST_MANIFEST_URL = "https://raw.githubusercontent.com/hugouchoasborges/quick-focus-releases/main/latest.json";
-const DEFAULT_STORE_URL = "https://quicklabs.lemonsqueezy.com/checkout/buy/a0847e64-36db-461c-b79d-958d2a3e85e1?enabled=1491098";
+const DEFAULT_STORE_URL = "https://quicklabs.gumroad.com/l/quick-focus-pro";
 const MEDIA_FOLDERS = new Set(["Images", "Gifs", "Videos"]);
 const MEDIA_TREE_API_URL = "https://api.github.com/repos/hugouchoasborges/quick-focus-releases/git/trees/gh-pages?recursive=1";
 const MEDIA_IMAGE_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp", ".avif", ".svg"]);
@@ -416,23 +416,9 @@ async function initializeStoreLinks() {
     return;
   }
 
-  let storeUrl = DEFAULT_STORE_URL;
-  try {
-    const separator = LATEST_MANIFEST_URL.includes("?") ? "&" : "?";
-    const response = await fetch(`${LATEST_MANIFEST_URL}${separator}ts=${Date.now()}`, { cache: "no-store" });
-    if (response.ok) {
-      const manifest = await response.json();
-      if (manifest && typeof manifest.storeUrl === "string" && manifest.storeUrl.trim().length > 0) {
-        storeUrl = manifest.storeUrl.trim();
-      }
-    }
-  } catch (_error) {
-    storeUrl = DEFAULT_STORE_URL;
-  }
-
   links.forEach((link) => {
     if (link instanceof HTMLAnchorElement) {
-      link.href = storeUrl;
+      link.href = DEFAULT_STORE_URL;
     }
   });
 }
