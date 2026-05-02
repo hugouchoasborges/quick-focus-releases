@@ -127,7 +127,10 @@ jobs:
           EOF
 
           if [ -f releases-index.json ]; then
-            EXISTING_INDEX="$(cat releases-index.json)"
+            EXISTING_INDEX="$(tr -d '\000' < releases-index.json || true)"
+            if ! jq empty >/dev/null 2>&1 <<< "$EXISTING_INDEX"; then
+              EXISTING_INDEX="[]"
+            fi
           else
             EXISTING_INDEX="[]"
           fi
