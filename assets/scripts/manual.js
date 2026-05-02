@@ -1,4 +1,8 @@
-﻿const MANUAL_FILE = "manual_en.md";
+﻿const MANUAL_FILES = {
+  en: "manual_en.md",
+  pt: "manual_pt.md"
+};
+const MANUAL_LANGUAGE_KEY = "quickfocus-manual-language";
 
 function escapeHtml(text) {
   return String(text)
@@ -124,14 +128,29 @@ function bindActiveSection() {
   window.addEventListener("scroll", update, { passive: true });
 }
 
-async function initializeManual() {
+function resolveManualLanguage(input) {
+  return input === "pt" ? "pt" : "en";
+}
+
+function getManualLanguage() {
+  return resolveManualLanguage(localStorage.getItem(MANUAL_LANGUAGE_KEY) || "en");
+}
+
+function setManualLanguage(language) {
+  const value = resolveManualLanguage(language);
+  localStorage.setItem(MANUAL_LANGUAGE_KEY, value);
+  return value;
+}
+
+async function initializeManual(language) {
   const container = document.getElementById("manual-content");
   if (!container) {
     return;
   }
 
   try {
-    const response = await fetch(MANUAL_FILE, { cache: "no-store" });
+    const selectedLanguage = resolveManualLanguage(language);
+    const response = await fetch(MANUAL_FILES[selectedLanguage], { cache: "no-store" });
     if (!response.ok) {
       throw new Error("manual_not_found");
     }
@@ -145,4 +164,18 @@ async function initializeManual() {
   }
 }
 
-initializeManual();
+function initializeManualLanguageSelector() {
+  const selector = document.getElementById("manual-language-select");
+  if (!(selector instanceof HTMLSelectElement)) {
+    return;
+  }
+  const current = getManualLanguage();
+  selector.value = current;
+  selector.addEventListener("change", async () => {
+    const nextLanguage = setManualLanguage(selector.value);
+    await initializeManual(nextLanguage);
+  });
+}
+
+initializeManualLanguageSelector();
+initializeManual(getManualLanguage());

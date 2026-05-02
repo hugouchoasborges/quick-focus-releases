@@ -8,13 +8,17 @@
   <link rel="stylesheet" href="assets/styles/manual.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-row">
-      <a class="logo" href="index.html">QuickFocus</a>
-      <nav class="nav" aria-label="Primary navigation">
-        <a href="index.html">Home</a>
-        <a href="manual.html" aria-current="page">Manual</a>
-      </nav>
+  <header class="manual-header">
+    <div class="container manual-header-row">
+      <a class="manual-home-btn" href="index.html">HOME</a>
+      <div class="manual-title">QuickFocus</div>
+      <label class="manual-language-control" for="manual-language-select">
+        <span>Language</span>
+        <select id="manual-language-select" aria-label="Select manual language">
+          <option value="en">English</option>
+          <option value="pt">Português</option>
+        </select>
+      </label>
     </div>
   </header>
 
