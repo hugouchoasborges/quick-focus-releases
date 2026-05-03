@@ -181,6 +181,13 @@ jobs:
             done
             if [ "$keep" != "true" ]; then
               rm -rf "$dir"
+              stale_tag="v${version}"
+              if git rev-parse -q --verify "refs/tags/${stale_tag}" >/dev/null; then
+                git tag -d "${stale_tag}" || true
+              fi
+              if git ls-remote --tags --exit-code origin "refs/tags/${stale_tag}" >/dev/null 2>&1; then
+                git push origin ":refs/tags/${stale_tag}" || true
+              fi
             fi
           done
 
