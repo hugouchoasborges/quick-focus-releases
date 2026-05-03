@@ -161,9 +161,14 @@ h3 { font-size: 1.1rem; margin-bottom: .35rem; }
   background: #9ab6c6;
 }
 
-.hero-visual img, .showcase img {
+.hero-visual img, .hero-visual iframe, .showcase img {
   width: 100%;
   display: block;
+}
+
+.hero-visual iframe {
+  aspect-ratio: 16 / 9;
+  border: 0;
 }
 
 .showcase {
