@@ -142,20 +142,49 @@ jobs:
             --arg installerSha256 "${{ steps.vars.outputs.sha256 }}" \
             --arg releaseNotesUrl "${{ steps.vars.outputs.release_notes_url }}" \
             '
+              def classify($v):
+                if ($v | test("a$")) then "alpha"
+                elif ($v | test("b$")) then "beta"
+                else "stable"
+                end;
+
               (if type == "array" then . else [] end)
               | map(select(.version != $version))
-              + [{
+              | . + [{
                   version: $version,
                   releaseDateUtc: $releaseDateUtc,
                   installerUrl: $installerUrl,
                   installerSha256: $installerSha256,
                   releaseNotesUrl: $releaseNotesUrl
                 }]
+              | (map(select(classify(.version) == "alpha"))  | sort_by(.releaseDateUtc) | reverse | .[:2]) as $alpha
+              | (map(select(classify(.version) == "beta"))   | sort_by(.releaseDateUtc) | reverse | .[:2]) as $beta
+              | (map(select(classify(.version) == "stable")) | sort_by(.releaseDateUtc) | reverse | .[:3]) as $stable
+              | ($alpha + $beta + $stable)
+              | unique_by(.version)
+              | sort_by(.releaseDateUtc)
+              | reverse
             ' <<< "$EXISTING_INDEX")"
 
           printf "%s\n" "$UPDATED_INDEX" > releases-index.json
 
-          git add latest.json releases-index.json
+          mapfile -t KEEP_VERSIONS < <(jq -r '.[].version' releases-index.json)
+          for dir in releases/*; do
+            [ -d "$dir" ] || continue
+            version="$(basename "$dir")"
+            keep="false"
+            for v in "${KEEP_VERSIONS[@]}"; do
+              if [ "$v" = "$version" ]; then
+                keep="true"
+                break
+              fi
+            done
+            if [ "$keep" != "true" ]; then
+              rm -rf "$dir"
+            fi
+          done
+
+          git add -A latest.json releases-index.json releases
           if git diff --cached --quiet; then
             echo "Manifest files are already up to date"
             exit 0
