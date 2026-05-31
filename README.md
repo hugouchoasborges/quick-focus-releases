@@ -13,7 +13,7 @@
   ·
   <a href="https://hugouchoasborges.github.io/quick-focus-releases/">View website</a>
   ·
-  <a href="manual.html">Manual</a>
+  <a href="https://hugouchoasborges.github.io/quick-focus-releases/manual.html">Manual</a>
 </p>
 
 ## Productivity Without Context Switching
