@@ -1,56 +1,51 @@
-﻿# QuickFocus Landing (GitHub Pages / gh-pages)
+# QuickFocus
 
-This branch (`gh-pages`) hosts only the public website.
+<p align="center">
+  <img src="assets/manual/pt/app-main-interface.png" alt="QuickFocus main interface" width="900">
+</p>
 
-## Publish setup
+<p align="center">
+  <strong>A Windows desktop app built to keep tasks, context, and focus always within reach.</strong>
+</p>
 
-1. Open repository: `hugouchoasborges/quick-focus-releases`.
-2. Go to `Settings` > `Pages`.
-3. Source: `Deploy from a branch`.
-4. Branch: `gh-pages`.
-5. Folder: `/ (root)`.
-6. Save and wait for deployment.
+<p align="center">
+  <a href="https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/QuickFocus-Setup.zip"><strong>Download latest version</strong></a>
+  ·
+  <a href="https://hugouchoasborges.github.io/quick-focus-releases/">View website</a>
+  ·
+  <a href="manual.html">Manual</a>
+</p>
 
-## Operational model
+## Productivity Without Context Switching
 
-- `main` branch: updater metadata (`latest.json`, `releases-index.json`) and release artifacts metadata.
-- `gh-pages` branch: static landing page only.
+QuickFocus was created for people who work across multiple projects and need to capture, organize, and resume tasks quickly. It stays available from the Windows tray, opens fast, supports shortcuts, and keeps the essentials close without turning the tool into another distraction.
 
-## Update website
+## What The App Delivers
 
-1. Checkout `gh-pages` in the submodule.
-2. Edit `index.html` and `assets/*`.
-3. Commit and push inside submodule repository.
-4. In dev repo, commit the updated submodule pointer only if you want to pin a specific site commit.
+- **Tasks always within reach:** a tray-first workflow for opening, editing, and moving on without occupying your screen all day.
+- **Projects and workspaces:** organize work by context, client, routine, or focus area.
+- **Guided focus:** Pomodoro, alarms, snooze, tags, and deadlines help keep momentum.
+- **Notes, links, and attachments:** connect important information directly to your tasks.
+- **Fast search:** find tasks and context without digging through multiple screens.
 
-### Theme selector
+## Product Preview
 
-- Website supports `System`, `Dark`, and `White` themes.
-- User choice is saved in `localStorage` (`quickfocus-theme`).
-- `System` follows OS/browser preference via `prefers-color-scheme`.
+<p align="center">
+  <img src="assets/manual/pt/projects-and-workspaces.png" alt="Projects and workspaces in QuickFocus" width="420">
+  <img src="assets/manual/pt/smart-search-screen.png" alt="Smart search in QuickFocus" width="420">
+</p>
 
-### Media folders and gallery
+<p align="center">
+  <img src="assets/manual/pt/pomodoro-panel.png" alt="QuickFocus Pomodoro panel" width="420">
+  <img src="assets/manual/pt/ambient-mixer.png" alt="QuickFocus ambient sound mixer" width="420">
+</p>
 
-- Add assets to theme+language variants:
-  - `dark-en/Images`, `dark-en/Gifs`, `dark-en/Videos`
-  - `dark-pt/Images`, `dark-pt/Gifs`, `dark-pt/Videos`
-  - `white-en/Images`, `white-en/Gifs`, `white-en/Videos`
-  - `white-pt/Images`, `white-pt/Gifs`, `white-pt/Videos`
-- The website gallery is resolved dynamically from files in the selected variant folder.
-- The `Media` section is hidden automatically when the active variant has no media files.
+## Who It Is For
 
-## Download and upgrade links
+QuickFocus works well for developers, creators, freelancers, and professionals who move between projects and need to keep next actions, reminders, links, and work notes close.
 
-- Download (stable asset name):
-  - `https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/QuickFocus-Setup.zip`
-- Upgrade:
-  - `https://hugouchoasborges.notion.site/`
+## Get Started
 
-## Installer asset stability
+Download the latest version as a single file:
 
-Release flow keeps fixed asset name `QuickFocus-Setup.exe`:
-
-- dev repo script: `scripts/ensure-release-installer.ps1`
-- releases repo workflow: `.github/workflows/release-from-tag.yml`
-
-Both validate/use `releases/<version>/QuickFocus-Setup.exe`.
+**[Download QuickFocus for Windows](https://github.com/hugouchoasborges/quick-focus-releases/releases/latest/download/QuickFocus-Setup.zip)**
