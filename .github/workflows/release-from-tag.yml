@@ -157,12 +157,12 @@ jobs:
                   installerSha256: $installerSha256,
                   releaseNotesUrl: $releaseNotesUrl
                 }]
-              | (map(select(classify(.version) == "alpha"))  | sort_by(.releaseDateUtc) | reverse | .[:2]) as $alpha
-              | (map(select(classify(.version) == "beta"))   | sort_by(.releaseDateUtc) | reverse | .[:2]) as $beta
-              | (map(select(classify(.version) == "stable")) | sort_by(.releaseDateUtc) | reverse | .[:3]) as $stable
+              | (map(select(classify(.version) == "alpha"))  | sort_by(.releaseDateUtc, .version) | reverse | .[:2]) as $alpha
+              | (map(select(classify(.version) == "beta"))   | sort_by(.releaseDateUtc, .version) | reverse | .[:2]) as $beta
+              | (map(select(classify(.version) == "stable")) | sort_by(.releaseDateUtc, .version) | reverse | .[:3]) as $stable
               | ($alpha + $beta + $stable)
               | unique_by(.version)
-              | sort_by(.releaseDateUtc)
+              | sort_by(.releaseDateUtc, .version)
               | reverse
             ' <<< "$EXISTING_INDEX")"
 
